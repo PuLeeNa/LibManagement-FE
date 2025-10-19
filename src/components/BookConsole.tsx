@@ -1,0 +1,5 @@
+export function BookConsole() {
+    return (
+        <></>
+    )
+}
