@@ -6,7 +6,7 @@ export const GetBooks = async () => {
 
     try{
         const response = await axios.get(getBooksURL);
-        console.log(response.data);
+        return response.data;
     }catch(error){
         console.error("Error fetching books:", error);
         throw error;
