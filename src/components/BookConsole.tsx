@@ -20,6 +20,7 @@ export function BookConsole() {
   }
 
   const [bookData, setBookData] = useState<Book[]>([]);
+  const [selectedRow, setSelectedRow] = useState<Book | null>(null);
 
     useEffect(() => {
         const loadData = async () => {
@@ -44,6 +45,10 @@ export function BookConsole() {
         "Actions"
     ];
 
+    const handleEdit = (row: Book) => {
+      setSelectedRow(row);
+    }
+
     return (
         <>
         <Table striped bordered hover>
@@ -62,7 +67,7 @@ export function BookConsole() {
             ))}
             <td>
               <div className='d-flex gap-2'>
-                <Button variant='outline-success'>Edit</Button>
+                <Button variant='outline-success' onClick={() => handleEdit(row)}>Edit</Button>
                 <Button variant='outline-danger'>Delete</Button>
               </div>
             </td>
