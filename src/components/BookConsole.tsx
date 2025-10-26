@@ -57,7 +57,14 @@ export function BookConsole() {
     }
 
     const handleUpdate = (updatedBook: Book) => {
+      const updatedBooks = bookData.map((book) => 
+        book.bookId === updatedBook.bookId ? updatedBook : book
+      );
+      setBookData(updatedBooks);
+    }
 
+    const handleDelete = (bookId: string) => {
+      alert(`Delete book with ID: ${bookId} - Functionality to be implemented`);
     }
 
     return (
@@ -79,7 +86,7 @@ export function BookConsole() {
             <td>
               <div className='d-flex gap-2'>
                 <Button variant='outline-success' onClick={() => handleEdit(row)}>Edit</Button>
-                <Button variant='outline-danger'>Delete</Button>
+                <Button variant='outline-danger' onClick={() => handleDelete(row.bookId)}>Delete</Button>
               </div>
             </td>
           </tr>
