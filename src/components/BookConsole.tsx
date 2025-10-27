@@ -3,6 +3,7 @@ import Table from 'react-bootstrap/Table';
 import { GetBooks } from '../service/Books/GetBooks';
 import { Button } from 'react-bootstrap';
 import EditBook from './EditBook';
+import { DeleteBook } from '../service/Books/DeleteBook';
 
 export function BookConsole() {
 
@@ -63,8 +64,13 @@ export function BookConsole() {
       setBookData(updatedBooks);
     }
 
-    const handleDelete = (bookId: string) => {
-      alert(`Delete book with ID: ${bookId} - Functionality to be implemented`);
+    const handleDelete = async (bookId: string) => {
+      try{
+        await DeleteBook(bookId);
+        setBookData(bookData.filter((book) => book.bookId !== bookId))
+      }catch(error){
+        console.error("Error deleting book:", error);
+      }
     }
 
     return (
