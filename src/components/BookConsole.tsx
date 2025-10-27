@@ -4,6 +4,7 @@ import { GetBooks } from '../service/Books/GetBooks';
 import { Button } from 'react-bootstrap';
 import EditBook from './EditBook';
 import { DeleteBook } from '../service/Books/DeleteBook';
+import AddBook from './AddBook';
 
 export function BookConsole() {
 
@@ -24,6 +25,12 @@ export function BookConsole() {
   const [bookData, setBookData] = useState<Book[]>([]);
   const [selectedRow, setSelectedRow] = useState<Book | null>(null);
   const [showEditBookForm, setShowEditBookForm] = useState(false);
+  const [showAddBookForm, setShowAddBookForm] = useState(false);
+
+  const handleAdd = (newBook: Book) => {
+    setBookData([...bookData, newBook]);
+    setShowAddBookForm(false);
+  }
 
     useEffect(() => {
         const loadData = async () => {
@@ -75,6 +82,9 @@ export function BookConsole() {
 
     return (
         <>
+        <div className='d-flex justify-content-end p-3'>
+          <Button variant='outline-primary' onClick={() => setShowAddBookForm(true)}>Add</Button>
+        </div>
         <Table striped bordered hover>
       <thead>
         <tr>
@@ -100,6 +110,7 @@ export function BookConsole() {
       </tbody>
     </Table>
     <EditBook show={showEditBookForm} handleClose={handleClose} selectedRow={selectedRow} handleUpdate={handleUpdate} />
+    <AddBook show={showAddBookForm} handleOnClose={() => setShowAddBookForm(false)} handleAdd={handleAdd} />
         </>
     )
 }
