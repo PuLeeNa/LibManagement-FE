@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
-import { GetBooks } from '../service/Books/GetBooks';
+import { GetBooks } from '../service/BookData';
 import { Button } from 'react-bootstrap';
 import EditBook from './EditBook';
-import { DeleteBook } from '../service/Books/DeleteBook';
+import { DeleteBook } from '../service/BookData';
 import AddBook from './AddBook';
 
 export function BookConsole() {
