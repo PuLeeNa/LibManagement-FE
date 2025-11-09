@@ -66,6 +66,19 @@ function EditBook({
     }
   }
 
+  const renderFloatingTable = (label: string, name: keyof Book, type = "text", readOnly = false) => 
+  (
+    <FloatingLabel controlId="floatingInput" label={label} className="mb-3">
+          <Form.Control 
+          type={type}
+          name={name}
+          value={book[name]}
+          onChange={handleOnChange} 
+          readOnly={readOnly}
+          />
+        </FloatingLabel>
+  )
+
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -74,7 +87,17 @@ function EditBook({
       <Modal.Body>
         <Form>
         {/* Form */}
-        <FloatingLabel controlId="floatingInput" label="Book ID" className="mb-3">
+        {renderFloatingTable("Book Id", "bookId", "text", true)}
+        {renderFloatingTable("Book Name", "bookName", "text", false)}
+        {renderFloatingTable("Author", "author", "text", false)}
+        {renderFloatingTable("Edition", "edition", "text", false)}
+        {renderFloatingTable("Publisher", "publisher", "text", false)}
+        {renderFloatingTable("ISBN", "isbn", "text", false)}
+        {renderFloatingTable("Price", "price", "number", false)}
+        {renderFloatingTable("Total Qty", "totalQty", "number", false)}
+        {renderFloatingTable("Available Qty", "availableQty", "number", false)}
+
+        {/* <FloatingLabel controlId="floatingInput" label="Book ID" className="mb-3">
           <Form.Control 
           readOnly
           type="text" 
@@ -145,7 +168,7 @@ function EditBook({
           name="availableQty" 
           value={book.availableQty}
           onChange={handleOnChange} />
-        </FloatingLabel>
+        </FloatingLabel> */}
         </Form>
       </Modal.Body>
       <Modal.Footer>
