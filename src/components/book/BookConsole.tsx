@@ -17,8 +17,6 @@ export function BookConsole() {
     price: number;
     totalQty: number;
     availableQty: number;
-    lastUpdateDate: string;
-    lastUpdateTime: string;
   }
 
   const [bookData, setBookData] = useState<Book[]>([]);

@@ -11,8 +11,6 @@ interface Book {
   price: number;
   totalQty: number;
   availableQty: number;
-  lastUpdateDate: string;
-  lastUpdateTime: string;
 }
 
 interface BookEditProps {
@@ -41,8 +39,6 @@ function EditBook({
     price: 0,
     totalQty: 0,
     availableQty: 0,
-    lastUpdateDate: "",
-    lastUpdateTime: "",
   });
 
   // need load the data when component mounted
@@ -76,6 +72,7 @@ function EditBook({
         <Modal.Title>Edit Book</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <Form>
         {/* Form */}
         <FloatingLabel controlId="floatingInput" label="Book ID" className="mb-3">
           <Form.Control 
@@ -149,25 +146,7 @@ function EditBook({
           value={book.availableQty}
           onChange={handleOnChange} />
         </FloatingLabel>
-
-        <FloatingLabel controlId="floatingInput" label="Last Updated Date" className="mb-3">
-          <Form.Control 
-          readOnly
-          type="text" 
-          name="lastUpdateDate" 
-          value={book.lastUpdateDate}
-          onChange={handleOnChange} />
-        </FloatingLabel>
-
-        <FloatingLabel controlId="floatingInput" label="Last Updated Time" className="mb-3">
-          <Form.Control 
-          readOnly
-          type="text" 
-          name="lastUpdateTime" 
-          value={book.lastUpdateTime}
-          onChange={handleOnChange} />
-        </FloatingLabel>
-
+        </Form>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>

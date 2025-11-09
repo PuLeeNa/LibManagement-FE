@@ -68,6 +68,7 @@ function AddBook({
         <Modal.Title>Add Book</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <Form>
         {/* Form */}
         <FloatingLabel controlId="floatingInput" label="Title" className="mb-3">
           <Form.Control 
@@ -132,7 +133,7 @@ function AddBook({
           value={newBook.availableQty}
           onChange={handleOnChange} />
         </FloatingLabel>
-
+  </Form>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
