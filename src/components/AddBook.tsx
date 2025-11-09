@@ -27,6 +27,7 @@ function AddBook({
   show,
   handleClose,
   handleAdd,
+  addBook
 }: any) {
 
   const [newBook, setNewBook] = useState<Book>({
@@ -54,7 +55,7 @@ function AddBook({
   // handle the add book process with the back-end
   const handleOnSubmit = async () => {
     try{
-        const newBookDetails = await AddBookData(newBook);
+        const newBookDetails = await addBook(newBook);
         handleAdd(newBookDetails);
         handleClose();
     }catch(err){
