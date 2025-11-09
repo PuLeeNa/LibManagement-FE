@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Modal, FloatingLabel, Form } from "react-bootstrap";
-import { AddBookData } from "../service/BookData";
 
 interface Book {
   bookId: string;

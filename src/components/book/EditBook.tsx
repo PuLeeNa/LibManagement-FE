@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Button, Modal, FloatingLabel, Form } from "react-bootstrap";
-import { UpdateBook } from "../service/BookData";
 
 interface Book {
   bookId: string;
@@ -21,6 +20,7 @@ interface BookEditProps {
   handleClose: () => void;
   selectedRow: Book | null;
   handleUpdate: (updatedBook: Book) => void;
+  updateBooks: (book: Book) => Promise<void>;
 }
 
 function EditBook({
@@ -28,6 +28,7 @@ function EditBook({
   handleClose,
   selectedRow,
   handleUpdate,
+  updateBooks
 }: BookEditProps) {
 
   const [book, setBook] = useState<Book>({
@@ -61,8 +62,8 @@ function EditBook({
 
   const handleSave = async () => {
     try{
-        const updatedBook = await UpdateBook(book);
-        handleUpdate(updatedBook);
+        await updateBooks(book);
+        handleUpdate(book);
         handleClose();
     }catch(err){
         console.error("Failed to update the book", err);

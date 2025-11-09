@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { AddBookData, GetBooks } from "../service/BookData";
+import { AddBookData, GetBooks, UpdateBook } from "../../service/BookData";
 import { Button } from "react-bootstrap";
 import EditBook from "./EditBook";
-import { DeleteBook } from "../service/BookData";
+import { DeleteBook } from "../../service/BookData";
 import AddBook from "./AddBook";
 
 export function BookConsole() {
@@ -128,12 +128,13 @@ export function BookConsole() {
         handleClose={handleClose}
         selectedRow={selectedRow}
         handleUpdate={handleUpdate}
+        updateBooks={UpdateBook}
       />
       <AddBook
         show={showAddBookForm}
-        handleOnClose={() => setShowAddBookForm(false)}
+        handleClose={() => setShowAddBookForm(false)}
         handleAdd={handleAdd}
-        addBook={AddBookData} 
+        addBook={AddBookData}
       />
     </>
   );
