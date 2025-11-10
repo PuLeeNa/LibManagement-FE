@@ -82,7 +82,16 @@ function AddBook({
       <Modal.Body>
         <Form>
         {/* Form */}
-        <FloatingLabel controlId="floatingInput" label="Title" className="mb-3">
+        {createFormElement("Book Name", "bookName", "text")}
+        {createFormElement("Author", "author", "text")}
+        {createFormElement("Edition", "edition", "text")}
+        {createFormElement("Publisher", "publisher", "text")}
+        {createFormElement("ISBN", "isbn", "text")}
+        {createFormElement("Price", "price", "number")}
+        {createFormElement("Total Qty", "totalQty", "number")}
+        {createFormElement("Available Qty", "availableQty", "number")}
+
+        {/* <FloatingLabel controlId="floatingInput" label="Title" className="mb-3">
           <Form.Control 
           type="text" 
           name="bookName" 
@@ -144,7 +153,7 @@ function AddBook({
           name="availableQty" 
           value={newBook.availableQty}
           onChange={handleOnChange} />
-        </FloatingLabel>
+        </FloatingLabel> */}
   </Form>
       </Modal.Body>
       <Modal.Footer>
