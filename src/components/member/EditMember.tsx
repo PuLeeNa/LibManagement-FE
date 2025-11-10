@@ -80,7 +80,7 @@ function EditMember({
         {renderFloatingTable("Member Id", "memberId", "text", true)}
         {renderFloatingTable("Name", "name", "text", false)}
         {renderFloatingTable("Email", "email", "text", false)}
-        {renderFloatingTable("Membership Date", "membershipDate", "text", false)}
+        {renderFloatingTable("Membership Date", "membershipDate", "text", true)}
         </Form>
       </Modal.Body>
       <Modal.Footer>

@@ -61,7 +61,6 @@ function AddMember({
         {/* Form */}
         {createFormElement("Name", "name", "text")}
         {createFormElement("Email", "email", "text")}
-        {createFormElement("Membership Date", "membershipDate", "text")}
   </Form>
       </Modal.Body>
       <Modal.Footer>
