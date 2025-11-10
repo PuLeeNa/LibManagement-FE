@@ -62,6 +62,18 @@ function AddBook({
     }
   }
 
+  const createFormElement = (label: string, name: keyof Book, type = "text") => 
+    (
+      <FloatingLabel controlId="floatingInput" label={label} className="mb-3">
+            <Form.Control 
+            type={type}
+            name={name}
+            value={newBook[name]}
+            onChange={handleOnChange} 
+            />
+          </FloatingLabel>
+    )
+
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
