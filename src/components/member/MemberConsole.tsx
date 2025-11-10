@@ -1,79 +1,66 @@
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { AddBookData, GetBooks, UpdateBook } from "../../service/BookData";
+import { AddMemberData, GetMembers, UpdateMember, DeleteMember } from "../../service/MemberData";
 import { Button } from "react-bootstrap";
-import { DeleteBook } from "../../service/BookData";
 import EditMember from "./EditMember";
 import AddMember from "./AddMember";
 
 export function MemberConsole() {
-  interface Book {
-    bookId: string;
-    bookName: string;
-    author: string;
-    edition: string;
-    publisher: string;
-    isbn: string;
-    price: number;
-    totalQty: number;
-    availableQty: number;
+  interface Member {
+    memberId: string;
+    name: string;
+    email: string;
+    membershipDate: string;
   }
 
-  const [bookData, setBookData] = useState<Book[]>([]);
-  const [selectedRow, setSelectedRow] = useState<Book | null>(null);
-  const [showEditBookForm, setShowEditBookForm] = useState(false);
-  const [showAddBookForm, setShowAddBookForm] = useState(false);
+  const [memberData, setMemberData] = useState<Member[]>([]);
+  const [selectedRow, setSelectedRow] = useState<Member | null>(null);
+  const [showEditMemberForm, setShowEditMemberForm] = useState(false);
+  const [showAddMemberForm, setShowAddMemberForm] = useState(false);
 
-  const handleAdd = (newBook: Book) => {
-    setBookData([...bookData, newBook]);
-    setShowAddBookForm(false);
+  const handleAdd = (newMember: Member) => {
+    setMemberData([...memberData, newMember]);
+    setShowAddMemberForm(false);
   };
 
   useEffect(() => {
     const loadData = async () => {
-      const bookDetails = await GetBooks();
-      setBookData(bookDetails);
+      const memberDetails = await GetMembers();
+      setMemberData(memberDetails);
     };
     loadData();
   }, []);
 
   const tHeads: string[] = [
-    "Book Id",
+    "Member Id",
     "Name",
-    "Author",
-    "Edition",
-    "Publisher",
-    "ISBN",
-    "Price",
-    "Total Qty",
-    "Available Qty",
-    "Last Update Date",
-    "Last Update Time",
+    "Email",
+    "Membership Date",
     "Actions",
   ];
 
-  const handleEdit = (row: Book) => {
+  const handleEdit = (row: Member) => {
     setSelectedRow(row);
-    setShowEditBookForm(true);
+    setShowEditMemberForm(true);
   };
 
   const handleClose = () => {
-    setShowEditBookForm(false);
+    setShowEditMemberForm(false);
   };
 
-  const handleUpdate = (updatedBook: Book) => {
-    const updatedBooks = bookData.map((book) =>
-      book.bookId === updatedBook.bookId ? updatedBook : book
+  const handleUpdate = (updatedMember: Member) => {
+    const updatedMembers = memberData.map((member) =>
+      member.memberId === updatedMember.memberId ? updatedMember : member
     );
-    setBookData(updatedBooks);
+    setMemberData(updatedMembers);
   };
 
-  const handleDelete = async (bookId: string) => {
+  const handleDelete = async (memberId: string) => {
     try {
-      await DeleteBook(bookId);
-      setBookData(bookData.filter((book) => book.bookId !== bookId));
+      await DeleteMember(memberId);
+      setMemberData(memberData.filter((member) => member.memberId !== memberId));
     } catch (error) {
-      console.error("Error deleting book:", error);
+      console.error("Error deleting member:", error);
     }
   };
 
@@ -82,7 +69,7 @@ export function MemberConsole() {
       <div className="d-flex justify-content-end p-3">
         <Button
           variant="outline-primary"
-          onClick={() => setShowAddBookForm(true)}
+          onClick={() => setShowAddMemberForm(true)}
         >
           Add
         </Button>
@@ -96,8 +83,8 @@ export function MemberConsole() {
           </tr>
         </thead>
         <tbody>
-          {bookData.map((row) => (
-            <tr key={row.bookId}>
+          {memberData.map((row) => (
+            <tr key={row.memberId}>
               {Object.values(row).map((cell, index) => (
                 <td key={index}>{cell}</td>
               ))}
@@ -111,7 +98,7 @@ export function MemberConsole() {
                   </Button>
                   <Button
                     variant="outline-danger"
-                    onClick={() => handleDelete(row.bookId)}
+                    onClick={() => handleDelete(row.memberId)}
                   >
                     Delete
                   </Button>
@@ -122,17 +109,17 @@ export function MemberConsole() {
         </tbody>
       </Table>
       <EditMember
-        show={showEditBookForm}
+        show={showEditMemberForm}
         handleClose={handleClose}
         selectedRow={selectedRow}
         handleUpdate={handleUpdate}
-        updateBooks={UpdateBook}
+        updateMembers={UpdateMember}
       />
       <AddMember
-        show={showAddBookForm}
-        handleClose={() => setShowAddBookForm(false)}
+        show={showAddMemberForm}
+        handleClose={() => setShowAddMemberForm(false)}
         handleAdd={handleAdd}
-        addBook={AddBookData}
+        addMember={AddMemberData}
       />
     </>
   );
