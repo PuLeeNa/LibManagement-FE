@@ -11,8 +11,6 @@ interface Book {
   price: number;
   totalQty: number;
   availableQty: number;
-  lastUpdateDate: string;
-  lastUpdateTime: string;
 }
 
 // interface BookEditProps {
@@ -38,17 +36,13 @@ function AddBook({
     isbn: "",
     price: 0,
     totalQty: 0,
-    availableQty: 0,
-    lastUpdateDate: "",
-    lastUpdateTime: "",
+    availableQty: 0
   });
 
   // add book data from the form
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewBook({
-      ...newBook,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setNewBook((prev) => ({...prev, [name]: value}));
   }
 
   // handle the add book process with the back-end
