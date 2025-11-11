@@ -4,13 +4,15 @@ import "./App.css";
 import NavB from "./components/NavB";
 import { BookConsole } from "./components/book/BookConsole";
 import { MemberConsole } from "./components/member/MemberConsole";
+import { StaffConsole } from "./components/StaffConsole";
 
 function App() {
   return (
     <>
       <NavB />
       {/* <BookConsole /> */}
-      <MemberConsole />
+      {/* <MemberConsole /> */}
+      <StaffConsole />
     </>
   );
 }
