@@ -1,66 +1,76 @@
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { AddMemberData, GetMembers, UpdateMember, DeleteMember } from "../../service/MemberData";
+import { AddStaffData, GetStaffs, UpdateStaff, DeleteStaff } from "../../service/StaffData";
 import { Button } from "react-bootstrap";
-import EditMember from "./EditMember";
-import AddMember from "./AddMember";
+import EditStaff from "./EditStaff";
+import AddStaff from "./AddStaff";
 
-export function MemberConsole() {
-  interface Member {
-    memberId: string;
-    name: string;
+export function StaffConsole() {
+  interface Staff {
+    staffId: string;
+    firstname: string;
+    lastname: string;
     email: string;
-    membershipDate: string;
+    joinDate: string;
+    lastUpdateDate: string;
+    lastUpdateTime: string;
+    phone: string;
+    Role: string;
   }
 
-  const [memberData, setMemberData] = useState<Member[]>([]);
-  const [selectedRow, setSelectedRow] = useState<Member | null>(null);
-  const [showEditMemberForm, setShowEditMemberForm] = useState(false);
-  const [showAddMemberForm, setShowAddMemberForm] = useState(false);
+  const [staffData, setStaffData] = useState<Staff[]>([]);
+  const [selectedRow, setSelectedRow] = useState<Staff | null>(null);
+  const [showEditStaffForm, setShowEditStaffForm] = useState(false);
+  const [showAddStaffForm, setShowAddStaffForm] = useState(false);
 
-  const handleAdd = (newMember: Member) => {
-    setMemberData([...memberData, newMember]);
-    setShowAddMemberForm(false);
+  const handleAdd = (newStaff: Staff) => {
+    setStaffData([...staffData, newStaff]);
+    setShowAddStaffForm(false);
   };
 
   useEffect(() => {
     const loadData = async () => {
-      const memberDetails = await GetMembers();
-      setMemberData(memberDetails);
+      const staffDetails = await GetStaffs();
+      setStaffData(staffDetails);
     };
     loadData();
   }, []);
 
   const tHeads: string[] = [
-    "Member Id",
-    "Name",
+    "Staff Id",
+    "First Name",
+    "Last Name",
     "Email",
-    "Membership Date",
+    "Join Date",
+    "Last Update Date",
+    "Last Update Time",
+    "Phone",
+    "Role",
     "Actions",
   ];
 
-  const handleEdit = (row: Member) => {
+  const handleEdit = (row: Staff) => {
     setSelectedRow(row);
-    setShowEditMemberForm(true);
+    setShowEditStaffForm(true);
   };
 
   const handleClose = () => {
-    setShowEditMemberForm(false);
+    setShowEditStaffForm(false);
   };
 
-  const handleUpdate = (updatedMember: Member) => {
-    const updatedMembers = memberData.map((member) =>
-      member.memberId === updatedMember.memberId ? updatedMember : member
+  const handleUpdate = (updatedStaff: Staff) => {
+    const updatedStaffs = staffData.map((staff) =>
+      staff.staffId === updatedStaff.staffId ? updatedStaff : staff
     );
-    setMemberData(updatedMembers);
+    setStaffData(updatedStaffs);
   };
 
-  const handleDelete = async (memberId: string) => {
+  const handleDelete = async (staffId: string) => {
     try {
-      await DeleteMember(memberId);
-      setMemberData(memberData.filter((member) => member.memberId !== memberId));
+      await DeleteStaff(staffId);
+      setStaffData(staffData.filter((staff) => staff.staffId !== staffId));
     } catch (error) {
-      console.error("Error deleting member:", error);
+      console.error("Error deleting staff:", error);
     }
   };
 
@@ -69,7 +79,7 @@ export function MemberConsole() {
       <div className="d-flex justify-content-end p-3">
         <Button
           variant="outline-primary"
-          onClick={() => setShowAddMemberForm(true)}
+          onClick={() => setShowAddStaffForm(true)}
         >
           Add
         </Button>
@@ -83,8 +93,8 @@ export function MemberConsole() {
           </tr>
         </thead>
         <tbody>
-          {memberData.map((row) => (
-            <tr key={row.memberId}>
+          {staffData.map((row) => (
+            <tr key={row.staffId}>
               {Object.values(row).map((cell, index) => (
                 <td key={index}>{cell}</td>
               ))}
@@ -98,7 +108,7 @@ export function MemberConsole() {
                   </Button>
                   <Button
                     variant="outline-danger"
-                    onClick={() => handleDelete(row.memberId)}
+                    onClick={() => handleDelete(row.staffId)}
                   >
                     Delete
                   </Button>
@@ -108,18 +118,18 @@ export function MemberConsole() {
           ))}
         </tbody>
       </Table>
-      <EditMember
-        show={showEditMemberForm}
+      <EditStaff
+        show={showEditStaffForm}
         handleClose={handleClose}
         selectedRow={selectedRow}
         handleUpdate={handleUpdate}
-        updateMembers={UpdateMember}
+        updateStaffs={UpdateStaff}
       />
-      <AddMember
-        show={showAddMemberForm}
-        handleClose={() => setShowAddMemberForm(false)}
+      <AddStaff
+        show={showAddStaffForm}
+        handleClose={() => setShowAddStaffForm(false)}
         handleAdd={handleAdd}
-        addMember={AddMemberData}
+        addStaff={AddStaffData}
       />
     </>
   );
