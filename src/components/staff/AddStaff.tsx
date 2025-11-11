@@ -3,14 +3,11 @@ import { Button, Modal, FloatingLabel, Form } from "react-bootstrap";
 
 interface Staff {
   staffId: string;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  joinDate: string;
-  lastUpdateDate: string;
-  lastUpdateTime: string;
   phone: string;
-  Role: string;
+  role: string;
 }
 
 function AddStaff({
@@ -22,14 +19,11 @@ function AddStaff({
 
   const [newStaff, setNewStaff] = useState<Staff>({
     staffId: "",
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
-    joinDate: "",
-    lastUpdateDate: "",
-    lastUpdateTime: "",
     phone: "",
-    Role: ""
+    role: ""
   });
 
   // add book data from the form
@@ -69,11 +63,11 @@ function AddStaff({
       <Modal.Body>
         <Form>
         {/* Form */}
-        {createFormElement("First Name", "firstname", "text")}
-        {createFormElement("Last Name", "lastname", "text")}
+        {createFormElement("First Name", "firstName", "text")}
+        {createFormElement("Last Name", "lastName", "text")}
         {createFormElement("Email", "email", "text")}
         {createFormElement("Phone", "phone", "text")}
-        {createFormElement("Role", "Role", "text")}
+        {createFormElement("Role", "role", "text")}
   </Form>
       </Modal.Body>
       <Modal.Footer>

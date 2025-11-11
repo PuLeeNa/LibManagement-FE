@@ -8,14 +8,14 @@ import AddStaff from "./AddStaff";
 export function StaffConsole() {
   interface Staff {
     staffId: string;
-    firstname: string;
-    lastname: string;
+    firstName: string;
+    lastName: string;
     email: string;
     joinDate: string;
     lastUpdateDate: string;
     lastUpdateTime: string;
     phone: string;
-    Role: string;
+    role: string;
   }
 
   const [staffData, setStaffData] = useState<Staff[]>([]);

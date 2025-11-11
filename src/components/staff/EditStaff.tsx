@@ -3,14 +3,14 @@ import { Button, Modal, FloatingLabel, Form } from "react-bootstrap";
 
 interface Staff {
   staffId: string;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   email: string;
   joinDate: string;
   lastUpdateDate: string;
   lastUpdateTime: string;
   phone: string;
-  Role: string;
+  role: string;
 }
 
 interface StaffEditProps {
@@ -31,14 +31,14 @@ function EditStaff({
 
   const [staff, setStaff] = useState<Staff>({
     staffId: "",
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     joinDate: "",
     lastUpdateDate: "",
     lastUpdateTime: "",
     phone: "",
-    Role: ""
+    role: ""
   });
 
   // need load the data when component mounted
@@ -88,14 +88,14 @@ function EditStaff({
         <Form>
         {/* Form */}
         {renderFloatingTable("Member Id", "staffId", "text", true)}
-        {renderFloatingTable("First Name", "firstname", "text", false)}
-        {renderFloatingTable("Last Name", "lastname", "text", false)}
+        {renderFloatingTable("First Name", "firstName", "text", false)}
+        {renderFloatingTable("Last Name", "lastName", "text", false)}
         {renderFloatingTable("Email", "email", "text", false)}
         {renderFloatingTable("Join Date", "joinDate", "text", true)}
         {renderFloatingTable("Last Update Date", "lastUpdateDate", "text", true)}
         {renderFloatingTable("Last Update Time", "lastUpdateTime", "text", true)}
         {renderFloatingTable("Phone", "phone", "text", false)}
-        {renderFloatingTable("Role", "Role", "text", false)}
+        {renderFloatingTable("Role", "role", "text", false)}
         </Form>
       </Modal.Body>
       <Modal.Footer>
