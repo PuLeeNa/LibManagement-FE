@@ -1,68 +1,78 @@
 import { useEffect, useState } from "react";
 import { Button, Modal, FloatingLabel, Form } from "react-bootstrap";
 
-interface Member {
-  memberId: string;
-  name: string;
+interface Staff {
+  staffId: string;
+  firstname: string;
+  lastname: string;
   email: string;
-  membershipDate: string;
+  joinDate: string;
+  lastUpdateDate: string;
+  lastUpdateTime: string;
+  phone: string;
+  Role: string;
 }
 
-interface MemberEditProps {
+interface StaffEditProps {
   show: boolean;
   handleClose: () => void;
-  selectedRow: Member | null;
-  handleUpdate: (updatedMember: Member) => void;
-  updateMembers: (member: Member) => Promise<void>;
+  selectedRow: Staff | null;
+  handleUpdate: (updatedStaff: Staff) => void;
+  updateStaffs: (staff: Staff) => Promise<void>;
 }
 
-function EditMember({
+function EditStaff({
   show,
   handleClose,
   selectedRow,
   handleUpdate,
-  updateMembers
-}: MemberEditProps) {
+  updateStaffs
+}: StaffEditProps) {
 
-  const [member, setMember] = useState<Member>({
-    memberId: "",
-    name: "",
+  const [staff, setStaff] = useState<Staff>({
+    staffId: "",
+    firstname: "",
+    lastname: "",
     email: "",
-    membershipDate: "",
+    joinDate: "",
+    lastUpdateDate: "",
+    lastUpdateTime: "",
+    phone: "",
+    Role: ""
   });
 
   // need load the data when component mounted
   useEffect(() => {
     if (selectedRow) {
-        setMember({...selectedRow});
+        setStaff({...selectedRow});
     }
   }, [selectedRow]);
 
   // add book data from the form
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMember({
-      ...member,
+    setStaff({
+      ...staff,
       [e.target.name]: e.target.value,
     });
   }
 
   const handleSave = async () => {
     try{
-        await updateMembers(member);
-        handleUpdate(member);
+        await updateStaffs(staff);
+        handleUpdate(staff);
         handleClose();
     }catch(err){
-        console.error("Failed to update the member", err);
+        console.error("Failed to update the staff", err);
     }
   }
 
-  const renderFloatingTable = (label: string, name: keyof Member, type = "text", readOnly = false) => 
+  const renderFloatingTable = (label: string, name: keyof Staff, type = "text", readOnly = false) => 
   (
     <FloatingLabel controlId="floatingInput" label={label} className="mb-3">
           <Form.Control 
           type={type}
           name={name}
-          value={member[name]}
+          value={staff[name]}
           onChange={handleOnChange} 
           readOnly={readOnly}
           />
@@ -77,10 +87,15 @@ function EditMember({
       <Modal.Body>
         <Form>
         {/* Form */}
-        {renderFloatingTable("Member Id", "memberId", "text", true)}
-        {renderFloatingTable("Name", "name", "text", false)}
+        {renderFloatingTable("Member Id", "staffId", "text", true)}
+        {renderFloatingTable("First Name", "firstname", "text", false)}
+        {renderFloatingTable("Last Name", "lastname", "text", false)}
         {renderFloatingTable("Email", "email", "text", false)}
-        {renderFloatingTable("Membership Date", "membershipDate", "text", true)}
+        {renderFloatingTable("Join Date", "joinDate", "text", true)}
+        {renderFloatingTable("Last Update Date", "lastUpdateDate", "text", true)}
+        {renderFloatingTable("Last Update Time", "lastUpdateTime", "text", true)}
+        {renderFloatingTable("Phone", "phone", "text", false)}
+        {renderFloatingTable("Role", "Role", "text", false)}
         </Form>
       </Modal.Body>
       <Modal.Footer>
@@ -95,4 +110,4 @@ function EditMember({
   );
 }
 
-export default EditMember;
+export default EditStaff;
