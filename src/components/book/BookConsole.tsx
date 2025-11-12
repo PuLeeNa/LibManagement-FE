@@ -89,7 +89,7 @@ export function BookConsole() {
           variant="outline-primary"
           onClick={() => setShowAddBookForm(true)}
         >
-          Add
+          Add {formattedTitle}
         </Button>
       </div>
       <h1 className="p-2 " style={{ color: 'navy' }}>{formattedTitle}</h1>
