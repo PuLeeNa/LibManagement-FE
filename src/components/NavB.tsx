@@ -1,6 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { NavLink } from 'react-router';
 
 function NavB() {
   return (
@@ -9,10 +10,10 @@ function NavB() {
         <Container>
           {/* <Navbar.Brand href="#home">LibManagement</Navbar.Brand> */}
           <Nav className="me-auto">
-            <Nav.Link href="#home">Book</Nav.Link>
-            <Nav.Link href="#features">Lendings</Nav.Link>
-            <Nav.Link href="#pricing">Staff</Nav.Link>
-            <Nav.Link href="#pricing">Members</Nav.Link>
+            <Nav.Link as={NavLink} to="/book">Book</Nav.Link>
+            <Nav.Link as={NavLink} to="/lending">Lendings</Nav.Link>
+            <Nav.Link as={NavLink} to="/staff">Staff</Nav.Link>
+            <Nav.Link as={NavLink} to="/member">Members</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

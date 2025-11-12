@@ -20,7 +20,7 @@ function App() {
             <Route path="/member" element = {<MemberConsole />} />
             <Route path="/staff" element = {<StaffConsole />} />
             <Route path="/lending" element = {<LendingConsole />} />
-            <Route path="/**" element = {<NotFound />} />
+            <Route path="/*" element = {<NotFound />} />
           </Routes>
       </BrowserRouter>
     </>
