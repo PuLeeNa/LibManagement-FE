@@ -7,6 +7,7 @@ import { MemberConsole } from "./components/member/MemberConsole";
 import { StaffConsole } from "./components/staff/StaffConsole";
 import LendingConsole from "./components/lending/LendingConsole";
 import { BrowserRouter, Route, Routes } from "react-router";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/member" element = {<MemberConsole />} />
             <Route path="/staff" element = {<StaffConsole />} />
             <Route path="/lending" element = {<LendingConsole />} />
+            <Route path="/**" element = {<NotFound />} />
           </Routes>
       </BrowserRouter>
     </>
