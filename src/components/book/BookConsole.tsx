@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import EditBook from "./EditBook";
 import { DeleteBook } from "../../service/BookData";
 import AddBook from "./AddBook";
+import { useLocation } from "react-router";
 
 export function BookConsole() {
   interface Book {
@@ -77,6 +78,10 @@ export function BookConsole() {
     }
   };
 
+  const location = useLocation();
+  const routeName = location.pathname.split("/").filter(Boolean).pop() || "Home";
+  const formattedTitle = routeName.charAt(0).toUpperCase() + routeName.slice(1, -1) + "k";
+
   return (
     <>
       <div className="d-flex justify-content-end p-3">
@@ -87,8 +92,9 @@ export function BookConsole() {
           Add
         </Button>
       </div>
-      <Table striped bordered hover>
-        <thead>
+      <h1 className="p-2 " style={{ color: 'navy' }}>{formattedTitle}</h1>
+      <Table striped bordered hover style={{ borderColor: 'navy' }}>
+        <thead style={{ backgroundColor: 'navy', color: 'white' }}>
           <tr>
             {tHeads.map((headings) => (
               <th>{headings}</th>

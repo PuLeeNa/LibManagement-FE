@@ -4,6 +4,7 @@ import { AddMemberData, GetMembers, UpdateMember, DeleteMember } from "../../ser
 import { Button } from "react-bootstrap";
 import EditMember from "./EditMember";
 import AddMember from "./AddMember";
+import { useLocation } from "react-router";
 
 export function MemberConsole() {
   interface Member {
@@ -64,6 +65,10 @@ export function MemberConsole() {
     }
   };
 
+  const location = useLocation();
+  const routeName = location.pathname.split("/").filter(Boolean).pop() || "Home";
+  const formattedTitle = routeName.charAt(0).toUpperCase() + routeName.slice(1, -1) + "r";
+
   return (
     <>
       <div className="d-flex justify-content-end p-3">
@@ -71,11 +76,12 @@ export function MemberConsole() {
           variant="outline-primary"
           onClick={() => setShowAddMemberForm(true)}
         >
-          Add
+          Add {formattedTitle}
         </Button>
       </div>
-      <Table striped bordered hover>
-        <thead>
+      <h1 className="p-2 " style={{ color: 'navy' }}>{formattedTitle}</h1>
+      <Table striped bordered hover style={{ borderColor: 'navy' }}>
+        <thead style={{ backgroundColor: 'navy', color: 'white' }}>
           <tr>
             {tHeads.map((headings) => (
               <th>{headings}</th>

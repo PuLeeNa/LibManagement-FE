@@ -6,7 +6,7 @@ import { NavLink } from 'react-router';
 function NavB() {
   return (
     <>
-      <Navbar bg="dark" data-bs-theme="dark">
+      <Navbar style={{ backgroundColor: 'navy' }} data-bs-theme="dark">
         <Container>
           {/* <Navbar.Brand href="#home">LibManagement</Navbar.Brand> */}
           <Nav className="me-auto">

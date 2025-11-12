@@ -4,6 +4,7 @@ import { AddStaffData, GetStaffs, UpdateStaff, DeleteStaff } from "../../service
 import { Button } from "react-bootstrap";
 import EditStaff from "./EditStaff";
 import AddStaff from "./AddStaff";
+import { useLocation } from "react-router";
 
 export function StaffConsole() {
   interface Staff {
@@ -74,6 +75,10 @@ export function StaffConsole() {
     }
   };
 
+  const location = useLocation();
+  const routeName = location.pathname.split("/").filter(Boolean).pop() || "Home";
+  const formattedTitle = routeName.charAt(0).toUpperCase() + routeName.slice(1, -1)+ "f";
+
   return (
     <>
       <div className="d-flex justify-content-end p-3">
@@ -81,11 +86,12 @@ export function StaffConsole() {
           variant="outline-primary"
           onClick={() => setShowAddStaffForm(true)}
         >
-          Add
+          Add {formattedTitle}
         </Button>
       </div>
-      <Table striped bordered hover>
-        <thead>
+      <h1 className="p-2 " style={{ color: 'navy' }}>{formattedTitle}</h1>
+      <Table striped bordered hover style={{ borderColor: 'navy' }}>
+        <thead style={{ backgroundColor: 'navy', color: 'white' }}>
           <tr>
             {tHeads.map((headings) => (
               <th>{headings}</th>
