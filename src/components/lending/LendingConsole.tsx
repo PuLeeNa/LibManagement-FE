@@ -1,77 +1,75 @@
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { AddStaffData, GetStaffs, UpdateStaff, DeleteStaff } from "../../service/StaffData";
+import { AddLendingData, GetLendings, UpdateLending, DeleteLending } from "../../service/LendingData";
 import { Button } from "react-bootstrap";
-import EditLe from "./EditLendings";
-import AddStaff from "./AddStaff";
+import EditLendings from "./EditLendings";
+import AddLendings from "./AddLendings";
 import { useLocation } from "react-router";
 
 export function LendingConsole() {
-  interface Staff {
-    staffId: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    joinDate: string;
-    lastUpdateDate: string;
-    lastUpdateTime: string;
-    phone: string;
-    role: string;
+  interface Lending {
+    LendingId: string;
+    book: string;
+    member: string;
+    lendingDate: string;
+    returnDate: string;
+    isActiveLending: string;
+    overdueStatus: number;
+    fineAmount: number;
   }
 
-  const [staffData, setStaffData] = useState<Staff[]>([]);
-  const [selectedRow, setSelectedRow] = useState<Staff | null>(null);
-  const [showEditStaffForm, setShowEditStaffForm] = useState(false);
-  const [showAddStaffForm, setShowAddStaffForm] = useState(false);
+  const [lendingData, setLendingData] = useState<Lending[]>([]);
+  const [selectedRow, setSelectedRow] = useState<Lending | null>(null);
+  const [showEditLendingForm, setShowEditLendingForm] = useState(false);
+  const [showAddLendingForm, setShowAddLendingForm] = useState(false);
 
-  const handleAdd = (newStaff: Staff) => {
-    setStaffData([...staffData, newStaff]);
-    setShowAddStaffForm(false);
+  const handleAdd = (newLending: Lending) => {
+    setLendingData([...lendingData, newLending]);
+    setShowAddLendingForm(false);
   };
 
   useEffect(() => {
     const loadData = async () => {
-      const staffDetails = await GetStaffs();
-      setStaffData(staffDetails);
+      const lendingDetails = await GetLendings();
+      setLendingData(lendingDetails);
     };
     loadData();
   }, []);
 
   const tHeads: string[] = [
-    "Staff Id",
-    "First Name",
-    "Last Name",
-    "Email",
-    "Join Date",
-    "Last Update Date",
-    "Last Update Time",
-    "Phone",
-    "Role",
+    "Lending Id",
+    "Book",
+    "Member",
+    "Lending Date",
+    "Return Date",
+    "Is Active Lending",
+    "Overdue Status",
+    "Fine Amount",
     "Actions",
   ];
 
-  const handleEdit = (row: Staff) => {
+  const handleEdit = (row: Lending) => {
     setSelectedRow(row);
-    setShowEditStaffForm(true);
+    setShowEditLendingForm(true);
   };
 
   const handleClose = () => {
-    setShowEditStaffForm(false);
+    setShowEditLendingForm(false);
   };
 
-  const handleUpdate = (updatedStaff: Staff) => {
-    const updatedStaffs = staffData.map((staff) =>
-      staff.staffId === updatedStaff.staffId ? updatedStaff : staff
+  const handleUpdate = (updatedLending: Lending) => {
+    const updatedLendings = lendingData.map((lending) =>
+      lending.LendingId === updatedLending.LendingId ? updatedLending : lending
     );
-    setStaffData(updatedStaffs);
+    setLendingData(updatedLendings);
   };
 
-  const handleDelete = async (staffId: string) => {
+  const handleDelete = async (lendingId: string) => {
     try {
-      await DeleteStaff(staffId);
-      setStaffData(staffData.filter((staff) => staff.staffId !== staffId));
+      await DeleteLending(lendingId);
+      setLendingData(lendingData.filter((lending) => lending.LendingId !== lendingId));
     } catch (error) {
-      console.error("Error deleting staff:", error);
+      console.error("Error deleting lending:", error);
     }
   };
 
@@ -84,7 +82,7 @@ export function LendingConsole() {
       <div className="d-flex justify-content-end p-3">
         <Button
           variant="outline-primary"
-          onClick={() => setShowAddStaffForm(true)}
+          onClick={() => setShowAddLendingForm(true)}
         >
           Add {formattedTitle}
         </Button>
@@ -99,8 +97,8 @@ export function LendingConsole() {
           </tr>
         </thead>
         <tbody>
-          {staffData.map((row) => (
-            <tr key={row.staffId}>
+          {lendingData.map((row) => (
+            <tr key={row.LendingId}>
               {Object.values(row).map((cell, index) => (
                 <td key={index}>{cell}</td>
               ))}
@@ -114,7 +112,7 @@ export function LendingConsole() {
                   </Button>
                   <Button
                     variant="outline-danger"
-                    onClick={() => handleDelete(row.staffId)}
+                    onClick={() => handleDelete(row.LendingId)}
                   >
                     Delete
                   </Button>
@@ -124,18 +122,18 @@ export function LendingConsole() {
           ))}
         </tbody>
       </Table>
-      <EditStaff
-        show={showEditStaffForm}
+      <EditLendings
+        show={showEditLendingForm}
         handleClose={handleClose}
         selectedRow={selectedRow}
         handleUpdate={handleUpdate}
-        updateStaffs={UpdateStaff}
+        updateLendings={UpdateLending}
       />
-      <AddStaff
-        show={showAddStaffForm}
-        handleClose={() => setShowAddStaffForm(false)}
+      <AddLendings
+        show={showAddLendingForm}
+        handleClose={() => setShowAddLendingForm(false)}
         handleAdd={handleAdd}
-        addStaff={AddStaffData}
+        addLending={AddLendingData}
       />
     </>
   );
