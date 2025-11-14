@@ -82,7 +82,7 @@ function EditStaff({
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Edit Member</Modal.Title>
+        <Modal.Title>Edit Staff</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>

@@ -1,55 +1,49 @@
 import { useState } from "react";
 import { Button, Modal, FloatingLabel, Form } from "react-bootstrap";
 
-interface Staff {
-  staffId: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  role: string;
+interface Lending {
+  LendingId: string;
+  book: string;
+  member: string;
 }
 
-function AddStaff({
+function AddLendings({
   show,
   handleClose,
   handleAdd,
-  addStaff
+  addLending
 }: any) {
 
-  const [newStaff, setNewStaff] = useState<Staff>({
-    staffId: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    role: ""
+  const [newLending, setNewLending] = useState<Lending>({
+    LendingId: "",
+    book: "",
+    member: ""
   });
 
   // add book data from the form
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setNewStaff((prev) => ({...prev, [name]: value}));
+    setNewLending((prev) => ({...prev, [name]: value}));
   }
 
   // handle the add book process with the back-end
   const handleOnSubmit = async () => {
     try{
-        const newStaffDetails = await addStaff(newStaff);
-        handleAdd(newStaffDetails);
+        const newLendingDetails = await addLending(newLending);
+        handleAdd(newLendingDetails);
         handleClose();
     }catch(err){
-        console.error("Failed to add the staff", err);
+        console.error("Failed to add the lending", err);
     }
   }
 
-  const createFormElement = (label: string, name: keyof Staff, type = "text") => 
+  const createFormElement = (label: string, name: keyof Lending, type = "text") => 
     (
       <FloatingLabel controlId="floatingInput" label={label} className="mb-3">
             <Form.Control 
             type={type}
             name={name}
-            value={newStaff[name]}
+            value={newLending[name]}
             onChange={handleOnChange} 
             />
           </FloatingLabel>
@@ -63,11 +57,8 @@ function AddStaff({
       <Modal.Body>
         <Form>
         {/* Form */}
-        {createFormElement("First Name", "firstName", "text")}
-        {createFormElement("Last Name", "lastName", "text")}
-        {createFormElement("Email", "email", "text")}
-        {createFormElement("Phone", "phone", "text")}
-        {createFormElement("Role", "role", "text")}
+        {createFormElement("Book", "book", "text")}
+        {createFormElement("Member", "member", "text")}
   </Form>
       </Modal.Body>
       <Modal.Footer>
@@ -82,4 +73,4 @@ function AddStaff({
   );
 }
 
-export default AddStaff;
+export default AddLendings;
