@@ -28,16 +28,18 @@ export function LendingConsole() {
   const [showEditLendingForm, setShowEditLendingForm] = useState(false);
   const [showAddLendingForm, setShowAddLendingForm] = useState(false);
 
-  const handleAdd = (newLending: Lending) => {
+  const loadData = async () => {
+    const lendingDetails = await GetLendings();
+    setLendingData(lendingDetails);
+  };
+
+  const handleAdd = async (newLending: Lending) => {
     setLendingData([...lendingData, newLending]);
     setShowAddLendingForm(false);
+    await loadData();
   };
 
   useEffect(() => {
-    const loadData = async () => {
-      const lendingDetails = await GetLendings();
-      setLendingData(lendingDetails);
-    };
     loadData();
   }, []);
 
@@ -62,11 +64,12 @@ export function LendingConsole() {
     setShowEditLendingForm(false);
   };
 
-  const handleUpdate = (updatedLending: Lending) => {
+  const handleUpdate = async (updatedLending: Lending) => {
     const updatedLendings = lendingData.map((lending) =>
       lending.lendingId === updatedLending.lendingId ? updatedLending : lending
     );
     setLendingData(updatedLendings);
+    await loadData();
   };
 
   const handleDelete = async (lendingId: string) => {

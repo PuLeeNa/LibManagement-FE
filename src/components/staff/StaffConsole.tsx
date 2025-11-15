@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { AddStaffData, GetStaffs, UpdateStaff, DeleteStaff } from "../../service/StaffData";
+import {
+  AddStaffData,
+  GetStaffs,
+  UpdateStaff,
+  DeleteStaff,
+} from "../../service/StaffData";
 import { Button } from "react-bootstrap";
 import EditStaff from "./EditStaff";
 import AddStaff from "./AddStaff";
@@ -24,16 +29,18 @@ export function StaffConsole() {
   const [showEditStaffForm, setShowEditStaffForm] = useState(false);
   const [showAddStaffForm, setShowAddStaffForm] = useState(false);
 
-  const handleAdd = (newStaff: Staff) => {
+  const loadData = async () => {
+    const staffDetails = await GetStaffs();
+    setStaffData(staffDetails);
+  };
+
+  const handleAdd = async (newStaff: Staff) => {
     setStaffData([...staffData, newStaff]);
     setShowAddStaffForm(false);
+    await loadData();
   };
 
   useEffect(() => {
-    const loadData = async () => {
-      const staffDetails = await GetStaffs();
-      setStaffData(staffDetails);
-    };
     loadData();
   }, []);
 
@@ -59,11 +66,12 @@ export function StaffConsole() {
     setShowEditStaffForm(false);
   };
 
-  const handleUpdate = (updatedStaff: Staff) => {
+  const handleUpdate = async (updatedStaff: Staff) => {
     const updatedStaffs = staffData.map((staff) =>
       staff.staffId === updatedStaff.staffId ? updatedStaff : staff
     );
     setStaffData(updatedStaffs);
+    await loadData();
   };
 
   const handleDelete = async (staffId: string) => {
@@ -76,8 +84,10 @@ export function StaffConsole() {
   };
 
   const location = useLocation();
-  const routeName = location.pathname.split("/").filter(Boolean).pop() || "Home";
-  const formattedTitle = routeName.charAt(0).toUpperCase() + routeName.slice(1, -1)+ "f";
+  const routeName =
+    location.pathname.split("/").filter(Boolean).pop() || "Home";
+  const formattedTitle =
+    routeName.charAt(0).toUpperCase() + routeName.slice(1, -1) + "f";
 
   return (
     <>
@@ -89,9 +99,11 @@ export function StaffConsole() {
           Add {formattedTitle}
         </Button>
       </div>
-      <h1 className="p-2 " style={{ color: 'navy' }}>{formattedTitle}</h1>
-      <Table striped bordered hover style={{ borderColor: 'navy' }}>
-        <thead style={{ backgroundColor: 'navy', color: 'white' }}>
+      <h1 className="p-2 " style={{ color: "navy" }}>
+        {formattedTitle}
+      </h1>
+      <Table striped bordered hover style={{ borderColor: "navy" }}>
+        <thead style={{ backgroundColor: "navy", color: "white" }}>
           <tr>
             {tHeads.map((headings) => (
               <th>{headings}</th>

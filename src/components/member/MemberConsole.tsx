@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { AddMemberData, GetMembers, UpdateMember, DeleteMember } from "../../service/MemberData";
+import {
+  AddMemberData,
+  GetMembers,
+  UpdateMember,
+  DeleteMember,
+} from "../../service/MemberData";
 import { Button } from "react-bootstrap";
 import EditMember from "./EditMember";
 import AddMember from "./AddMember";
@@ -19,16 +24,18 @@ export function MemberConsole() {
   const [showEditMemberForm, setShowEditMemberForm] = useState(false);
   const [showAddMemberForm, setShowAddMemberForm] = useState(false);
 
-  const handleAdd = (newMember: Member) => {
+  const loadData = async () => {
+    const memberDetails = await GetMembers();
+    setMemberData(memberDetails);
+  };
+
+  const handleAdd = async (newMember: Member) => {
     setMemberData([...memberData, newMember]);
     setShowAddMemberForm(false);
+    await loadData();
   };
 
   useEffect(() => {
-    const loadData = async () => {
-      const memberDetails = await GetMembers();
-      setMemberData(memberDetails);
-    };
     loadData();
   }, []);
 
@@ -49,25 +56,30 @@ export function MemberConsole() {
     setShowEditMemberForm(false);
   };
 
-  const handleUpdate = (updatedMember: Member) => {
+  const handleUpdate = async (updatedMember: Member) => {
     const updatedMembers = memberData.map((member) =>
       member.memberId === updatedMember.memberId ? updatedMember : member
     );
     setMemberData(updatedMembers);
+    await loadData();
   };
 
   const handleDelete = async (memberId: string) => {
     try {
       await DeleteMember(memberId);
-      setMemberData(memberData.filter((member) => member.memberId !== memberId));
+      setMemberData(
+        memberData.filter((member) => member.memberId !== memberId)
+      );
     } catch (error) {
       console.error("Error deleting member:", error);
     }
   };
 
   const location = useLocation();
-  const routeName = location.pathname.split("/").filter(Boolean).pop() || "Home";
-  const formattedTitle = routeName.charAt(0).toUpperCase() + routeName.slice(1, -1) + "r";
+  const routeName =
+    location.pathname.split("/").filter(Boolean).pop() || "Home";
+  const formattedTitle =
+    routeName.charAt(0).toUpperCase() + routeName.slice(1, -1) + "r";
 
   return (
     <>
@@ -79,9 +91,11 @@ export function MemberConsole() {
           Add {formattedTitle}
         </Button>
       </div>
-      <h1 className="p-2 " style={{ color: 'navy' }}>{formattedTitle}</h1>
-      <Table striped bordered hover style={{ borderColor: 'navy' }}>
-        <thead style={{ backgroundColor: 'navy', color: 'white' }}>
+      <h1 className="p-2 " style={{ color: "navy" }}>
+        {formattedTitle}
+      </h1>
+      <Table striped bordered hover style={{ borderColor: "navy" }}>
+        <thead style={{ backgroundColor: "navy", color: "white" }}>
           <tr>
             {tHeads.map((headings) => (
               <th>{headings}</th>
