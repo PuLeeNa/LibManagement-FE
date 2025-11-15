@@ -1,10 +1,10 @@
-import axios from "axios"
+import api from "./authService/AxiosConfig"
 
-const baseURL = "http://localhost:8081/booklib/api/v1/members"
+const baseURL = "/v1/members"
 
 const AddMemberData = async (member: any) => {
     try{
-        const response = await axios.post(
+        const response = await api.post(
             baseURL, 
             member
         );
@@ -17,7 +17,7 @@ const AddMemberData = async (member: any) => {
 
 const DeleteMember = async (memberId: string) => {
     try{
-        const response = await axios.delete(
+        const response = await api.delete(
             `${baseURL}?memberId=${memberId}`
         );
         return response.data;
@@ -29,7 +29,7 @@ const DeleteMember = async (memberId: string) => {
 
 const GetMembers = async () => {
     try{
-        const response = await axios.get(`${baseURL}/getallmembers`);
+        const response = await api.get(`${baseURL}/getallmembers`);
         return response.data;
     }catch(error){
         console.error("Error fetching members:", error);
@@ -39,7 +39,7 @@ const GetMembers = async () => {
 
 const UpdateMember = async (member: any) => {
     try{
-        const response = await axios.patch(
+        const response = await api.patch(
             `${baseURL}?memberId=${member.memberId}`, 
             member
         );

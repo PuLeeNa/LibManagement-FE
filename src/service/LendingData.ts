@@ -1,10 +1,10 @@
-import axios from "axios"
+import api from "./authService/AxiosConfig"
 
-const baseURL = "http://localhost:8081/booklib/api/v1/lendings"
+const baseURL = "/v1/lendings"
 
 const AddLendingData = async (lending: any) => {
     try{
-        const response = await axios.post(
+        const response = await api.post(
             baseURL, 
             lending
         );
@@ -17,7 +17,7 @@ const AddLendingData = async (lending: any) => {
 
 const DeleteLending = async (lendingId: string) => {
     try{
-        const response = await axios.delete(
+        const response = await api.delete(
             `${baseURL}?lendingId=${lendingId}`
         );
         return response.data;
@@ -29,7 +29,7 @@ const DeleteLending = async (lendingId: string) => {
 
 const GetLendings = async () => {
     try{
-        const response = await axios.get(`${baseURL}/getalllendings`);
+        const response = await api.get(`${baseURL}/getalllendings`);
         return response.data;
     }catch(error){
         console.error("Error fetching lendings:", error);
@@ -39,7 +39,7 @@ const GetLendings = async () => {
 
 const UpdateLending = async (lending: any) => {
     try{
-        const response = await axios.patch(
+        const response = await api.patch(
             `${baseURL}?lendingId=${lending.lendingId}`, 
             lending
         );

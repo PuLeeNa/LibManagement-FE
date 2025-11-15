@@ -1,16 +1,24 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
+import { Button } from "react-bootstrap";
+import authService from "../service/authService/AuthService";
 
 function NavB() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    authService.logout();
+    navigate("/login");
+  };
   return (
     <>
       <Navbar style={{ backgroundColor: "navy" }} data-bs-theme="dark">
         <Container>
           <Navbar.Brand
             as={NavLink}
-            to="/book"
+            to="/"
             style={{
               fontSize: "1.8rem",
               fontWeight: "bold",
@@ -40,6 +48,9 @@ function NavB() {
               Members
             </Nav.Link>
           </Nav>
+          <Button variant="outline-light" onClick={handleLogout}>
+            Logout
+          </Button>
         </Container>
       </Navbar>
     </>

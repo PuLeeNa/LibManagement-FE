@@ -1,10 +1,10 @@
-import axios from "axios"
+import api from "./authService/AxiosConfig"
 
-const baseURL = "http://localhost:8081/booklib/api/v1/books"
+const baseURL = "/v1/books"
 
 const AddBookData = async (book: any) => {
     try{
-        const response = await axios.post(
+        const response = await api.post(
             baseURL, 
             book
         );
@@ -17,7 +17,7 @@ const AddBookData = async (book: any) => {
 
 const DeleteBook = async (bookId: string) => {
     try{
-        const response = await axios.delete(
+        const response = await api.delete(
             `${baseURL}?bookId=${bookId}`
         );
         return response.data;
@@ -29,7 +29,7 @@ const DeleteBook = async (bookId: string) => {
 
 const GetBooks = async () => {
     try{
-        const response = await axios.get(`${baseURL}/getallbooks`);
+        const response = await api.get(`${baseURL}/getallbooks`);
         return response.data;
     }catch(error){
         console.error("Error fetching books:", error);
@@ -39,7 +39,7 @@ const GetBooks = async () => {
 
 const UpdateBook = async (book: any) => {
     try{
-        const response = await axios.patch(
+        const response = await api.patch(
             `${baseURL}?bookId=${book.bookId}`, 
             book
         );

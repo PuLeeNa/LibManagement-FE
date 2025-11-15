@@ -6,22 +6,62 @@ import { BookConsole } from "./components/book/BookConsole";
 import { MemberConsole } from "./components/member/MemberConsole";
 import { StaffConsole } from "./components/staff/StaffConsole";
 import { LendingConsole } from "./components/lending/LendingConsole";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import NotFound from "./components/NotFound";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <NavB />
-          <Routes>
-            <Route path="/" element = {<BookConsole />} />
-            <Route path="/book" element = {<BookConsole />}/>
-            <Route path="/member" element = {<MemberConsole />} />
-            <Route path="/staff" element = {<StaffConsole />} />
-            <Route path="/lending" element = {<LendingConsole />} />
-            <Route path="/*" element = {<NotFound />} />
-          </Routes>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Navigate to="/dashboard" />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/book"
+            element={
+              <ProtectedRoute>
+                <BookConsole />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/member"
+            element={
+              <ProtectedRoute>
+                <MemberConsole />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/staff"
+            element={
+              <ProtectedRoute>
+                <StaffConsole />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/lending"
+            element={
+              <ProtectedRoute>
+                <LendingConsole />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
       </BrowserRouter>
     </>
   );

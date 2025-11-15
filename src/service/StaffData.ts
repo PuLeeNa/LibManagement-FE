@@ -1,10 +1,10 @@
-import axios from "axios"
+import api from "./authService/AxiosConfig"
 
-const baseURL = "http://localhost:8081/booklib/api/v1/staffs"
+const baseURL = "/v1/staffs"
 
 const AddStaffData = async (staff: any) => {
     try{
-        const response = await axios.post(
+        const response = await api.post(
             baseURL, 
             staff
         );
@@ -17,7 +17,7 @@ const AddStaffData = async (staff: any) => {
 
 const DeleteStaff = async (staffId: string) => {
     try{
-        const response = await axios.delete(
+        const response = await api.delete(
             `${baseURL}?staffId=${staffId}`
         );
         return response.data;
@@ -29,7 +29,7 @@ const DeleteStaff = async (staffId: string) => {
 
 const GetStaffs = async () => {
     try{
-        const response = await axios.get(`${baseURL}/getallstaffs`);
+        const response = await api.get(`${baseURL}/getallstaffs`);
         return response.data;
     }catch(error){
         console.error("Error fetching staffs:", error);
@@ -39,7 +39,7 @@ const GetStaffs = async () => {
 
 const UpdateStaff = async (staff: any) => {
     try{
-        const response = await axios.patch(
+        const response = await api.patch(
             `${baseURL}?staffId=${staff.staffId}`, 
             staff
         );
