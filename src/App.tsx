@@ -5,7 +5,7 @@ import NavB from "./components/NavB";
 import { BookConsole } from "./components/book/BookConsole";
 import { MemberConsole } from "./components/member/MemberConsole";
 import { StaffConsole } from "./components/staff/StaffConsole";
-import LendingConsole from "./components/lending/LendingConsole";
+import { LendingConsole } from "./components/lending/LendingConsole";
 import { BrowserRouter, Route, Routes } from "react-router";
 import NotFound from "./components/NotFound";
 

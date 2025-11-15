@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Modal, FloatingLabel, Form } from "react-bootstrap";
 
 interface Lending {
-  LendingId: string;
+  lendingId: string;
   book: string;
   member: string;
   lendingDate: string;
@@ -30,7 +30,7 @@ function EditLendings({
 }: LendingEditProps) {
 
   const [lending, setLending] = useState<Lending>({
-    LendingId: "",
+    lendingId: "",
     book: "",
     member: "",
     lendingDate: "",
@@ -79,31 +79,30 @@ function EditLendings({
   )
 
   return (
-    // <Modal show={show} onHide={handleClose}>
-    //   <Modal.Header closeButton>
-    //     <Modal.Title>Edit Lending</Modal.Title>
-    //   </Modal.Header>
-    //   <Modal.Body>
-    //     <Form>
-    //     {/* Form */}
-    //     {renderFloatingTable("Member Id", "LendingId", "text", true)}
-    //     {renderFloatingTable("First Name", "book", "text", false)}
-    //     {renderFloatingTable("Last Name", "member", "text", false)}
-    //     {renderFloatingTable("Lending Date", "lendingDate", "text", true)}
-    //     {renderFloatingTable("Return Date", "returnDate", "text", true)}
-    //     {renderFloatingTable("Is Active Lending", "isActiveLending", "text", false)}
-    //     </Form>
-    //   </Modal.Body>
-    //   <Modal.Footer>
-    //     <Button variant="secondary" onClick={handleClose}>
-    //       Close
-    //     </Button>
-    //     <Button variant="primary" onClick={handleSave}>
-    //       Update
-    //     </Button>
-    //   </Modal.Footer>
-    // </Modal>
-    <></>
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Edit Lending</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form>
+        {/* Form */}
+        {renderFloatingTable("Lending Id", "lendingId", "text", true)}
+        {renderFloatingTable("Book", "book", "text", true)}
+        {renderFloatingTable("Member", "member", "text", true)}
+        {renderFloatingTable("Lending Date", "lendingDate", "text", true)}
+        {renderFloatingTable("Return Date", "returnDate", "text", true)}
+        {renderFloatingTable("Is Active Lending", "isActiveLending", "text", true)}
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={handleSave}>
+          Update
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 }
 

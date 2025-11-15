@@ -40,7 +40,7 @@ const GetLendings = async () => {
 const UpdateLending = async (lending: any) => {
     try{
         const response = await axios.patch(
-            `${baseURL}?lendingId=${lending.LendingId}`, 
+            `${baseURL}?lendingId=${lending.lendingId}`, 
             lending
         );
         return response.data;

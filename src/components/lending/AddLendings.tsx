@@ -5,6 +5,7 @@ interface Lending {
   LendingId: string;
   book: string;
   member: string;
+  isActiveLending: string;
 }
 
 function AddLendings({
@@ -17,7 +18,8 @@ function AddLendings({
   const [newLending, setNewLending] = useState<Lending>({
     LendingId: "",
     book: "",
-    member: ""
+    member: "",
+    isActiveLending: "true",
   });
 
   // add book data from the form
