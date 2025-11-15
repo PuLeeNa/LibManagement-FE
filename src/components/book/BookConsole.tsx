@@ -24,6 +24,13 @@ export function BookConsole() {
   const [selectedRow, setSelectedRow] = useState<Book | null>(null);
   const [showEditBookForm, setShowEditBookForm] = useState(false);
   const [showAddBookForm, setShowAddBookForm] = useState(false);
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage] = useState(4);
+
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentRows = bookData.slice(indexOfFirstRow, indexOfLastRow);
 
   const loadData = async () => {
     const bookDetails = await GetBooks();
@@ -97,9 +104,9 @@ export function BookConsole() {
           Add Book
         </Button>
       </div>
-      <h1 className="p-2 " style={{ color: "navy" }}>
+      {/* <h1 className="p-2 " style={{ color: "navy" }}>
         Books
-      </h1>
+      </h1> */}
       <Table striped bordered hover style={{ borderColor: "navy" }}>
         <thead style={{ backgroundColor: "navy", color: "white" }}>
           <tr>
@@ -109,7 +116,7 @@ export function BookConsole() {
           </tr>
         </thead>
         <tbody>
-          {bookData.map((row) => (
+          {currentRows.map((row) => (
             <tr key={row.bookId}>
               {Object.values(row).map((cell, index) => (
                 <td key={index}>{cell}</td>
@@ -147,6 +154,40 @@ export function BookConsole() {
         handleAdd={handleAdd}
         addBook={AddBookData}
       />
+      <div className="d-flex justify-content-center gap-2 my-3">
+        <Button
+          variant="secondary"
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </Button>
+
+        {Array.from(
+          { length: Math.ceil(bookData.length / rowsPerPage) },
+          (_, i) => (
+            <Button
+              key={i + 1}
+              variant={currentPage === i + 1 ? "primary" : "outline-primary"}
+              onClick={() => setCurrentPage(i + 1)}
+            >
+              {i + 1}
+            </Button>
+          )
+        )}
+
+        <Button
+          variant="secondary"
+          onClick={() =>
+            setCurrentPage((prev) =>
+              Math.min(prev + 1, Math.ceil(bookData.length / rowsPerPage))
+            )
+          }
+          disabled={currentPage === Math.ceil(bookData.length / rowsPerPage)}
+        >
+          Next
+        </Button>
+      </div>
     </>
   );
 }
