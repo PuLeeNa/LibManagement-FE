@@ -32,13 +32,20 @@ export function StaffConsole() {
   const [rowsPerPage] = useState(5);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredData = staffData.filter((staff) =>
-    staff.staffId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    staff.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    staff.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    staff.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    staff.phone.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    staff.role.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredData = staffData.filter(
+    (staff) =>
+      (staff.staffId?.toLowerCase() || "").includes(
+        searchQuery.toLowerCase()
+      ) ||
+      (staff.firstName?.toLowerCase() || "").includes(
+        searchQuery.toLowerCase()
+      ) ||
+      (staff.lastName?.toLowerCase() || "").includes(
+        searchQuery.toLowerCase()
+      ) ||
+      (staff.email?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
+      (staff.phone?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
+      (staff.role?.toLowerCase() || "").includes(searchQuery.toLowerCase())
   );
 
   const indexOfLastRow = currentPage * rowsPerPage;
@@ -103,25 +110,25 @@ export function StaffConsole() {
     <>
       <div className="d-flex justify-content-between p-3 gap-2">
         <h1 className="p-1 " style={{ color: "navy" }}>
-        Staff
-      </h1>
-      <div className="d-flex justify-content-end p-3 gap-2">
-        <input
-          type="text"
-          placeholder="Search staff..."
-          value={searchQuery}
-          onChange={(e) => {
-            setSearchQuery(e.target.value);
-            setCurrentPage(1); // reset to first page on search
-          }}
-          className="form-control w-auto"
-        />
-        <Button
-          variant="outline-primary"
-          onClick={() => setShowAddStaffForm(true)}
-        >
-          Add Staff
-        </Button>
+          Staff
+        </h1>
+        <div className="d-flex justify-content-end p-3 gap-2">
+          <input
+            type="text"
+            placeholder="Search staff..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1); // reset to first page on search
+            }}
+            className="form-control w-auto"
+          />
+          <Button
+            variant="outline-primary"
+            onClick={() => setShowAddStaffForm(true)}
+          >
+            Add Staff
+          </Button>
         </div>
       </div>
       <Table striped bordered hover style={{ borderColor: "navy" }}>
@@ -201,7 +208,9 @@ export function StaffConsole() {
               Math.min(prev + 1, Math.ceil(filteredData.length / rowsPerPage))
             )
           }
-          disabled={currentPage === Math.ceil(filteredData.length / rowsPerPage)}
+          disabled={
+            currentPage === Math.ceil(filteredData.length / rowsPerPage)
+          }
         >
           Next
         </Button>

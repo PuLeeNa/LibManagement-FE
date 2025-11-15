@@ -29,10 +29,20 @@ export function LendingConsole() {
   const [showAddLendingForm, setShowAddLendingForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage] = useState(5);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredData = lendingData.filter(
+    (lending) =>
+      (lending.lendingId?.toLowerCase() || "").includes(
+        searchQuery.toLowerCase()
+      ) ||
+      (lending.book?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
+      (lending.member?.toLowerCase() || "").includes(searchQuery.toLowerCase())
+  );
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  const currentRows = lendingData.slice(indexOfFirstRow, indexOfLastRow);
+  const currentRows = filteredData.slice(indexOfFirstRow, indexOfLastRow);
 
   const loadData = async () => {
     const lendingDetails = await GetLendings();
@@ -91,13 +101,28 @@ export function LendingConsole() {
 
   return (
     <>
-      <div className="d-flex justify-content-end p-3">
-        <Button
-          variant="outline-primary"
-          onClick={() => setShowAddLendingForm(true)}
-        >
-          Add Lending
-        </Button>
+      <div className="d-flex justify-content-between p-3 gap-2">
+        <h1 className="p-1 " style={{ color: "navy" }}>
+          Lending
+        </h1>
+        <div className="d-flex justify-content-end p-3 gap-2">
+          <input
+            type="text"
+            placeholder="Search lending..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1); // reset to first page on search
+            }}
+            className="form-control w-auto"
+          />
+          <Button
+            variant="outline-primary"
+            onClick={() => setShowAddLendingForm(true)}
+          >
+            Add Lending
+          </Button>
+        </div>
       </div>
       <Table striped bordered hover style={{ borderColor: "navy" }}>
         <thead style={{ backgroundColor: "navy", color: "white" }}>
@@ -159,7 +184,7 @@ export function LendingConsole() {
         </Button>
 
         {Array.from(
-          { length: Math.ceil(lendingData.length / rowsPerPage) },
+          { length: Math.ceil(filteredData.length / rowsPerPage) },
           (_, i) => (
             <Button
               key={i + 1}
@@ -175,10 +200,12 @@ export function LendingConsole() {
           variant="secondary"
           onClick={() =>
             setCurrentPage((prev) =>
-              Math.min(prev + 1, Math.ceil(lendingData.length / rowsPerPage))
+              Math.min(prev + 1, Math.ceil(filteredData.length / rowsPerPage))
             )
           }
-          disabled={currentPage === Math.ceil(lendingData.length / rowsPerPage)}
+          disabled={
+            currentPage === Math.ceil(filteredData.length / rowsPerPage)
+          }
         >
           Next
         </Button>

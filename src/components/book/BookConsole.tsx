@@ -30,13 +30,18 @@ export function BookConsole() {
   // Search
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredData = bookData.filter((book) =>
-  book.bookId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  book.bookName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  book.publisher.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  book.isbn.toLowerCase().includes(searchQuery.toLowerCase())
-);
+  const filteredData = bookData.filter(
+    (book) =>
+      (book.bookId?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
+      (book.bookName?.toLowerCase() || "").includes(
+        searchQuery.toLowerCase()
+      ) ||
+      (book.author?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
+      (book.publisher?.toLowerCase() || "").includes(
+        searchQuery.toLowerCase()
+      ) ||
+      (book.isbn?.toLowerCase() || "").includes(searchQuery.toLowerCase())
+  );
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -97,7 +102,6 @@ export function BookConsole() {
       console.error("Error deleting book:", error);
     }
   };
-  
 
   // const location = useLocation();
   // const routeName =
@@ -109,25 +113,25 @@ export function BookConsole() {
     <>
       <div className="d-flex justify-content-between p-3 gap-2">
         <h1 className="p-1 " style={{ color: "navy" }}>
-        Books
-      </h1>
-      <div className="d-flex justify-content-end p-3 gap-2">
-        <input
-          type="text"
-          placeholder="Search books..."
-          value={searchQuery}
-          onChange={(e) => {
-            setSearchQuery(e.target.value);
-            setCurrentPage(1); // reset to first page on search
-          }}
-          className="form-control w-auto"
-        />
-        <Button
-          variant="outline-primary"
-          onClick={() => setShowAddBookForm(true)}
-        >
-          Add Book
-        </Button>
+          Books
+        </h1>
+        <div className="d-flex justify-content-end p-3 gap-2">
+          <input
+            type="text"
+            placeholder="Search books..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1); // reset to first page on search
+            }}
+            className="form-control w-auto"
+          />
+          <Button
+            variant="outline-primary"
+            onClick={() => setShowAddBookForm(true)}
+          >
+            Add Book
+          </Button>
         </div>
       </div>
       <Table striped bordered hover style={{ borderColor: "navy" }}>
@@ -206,7 +210,9 @@ export function BookConsole() {
               Math.min(prev + 1, Math.ceil(filteredData.length / rowsPerPage))
             )
           }
-          disabled={currentPage === Math.ceil(filteredData.length / rowsPerPage)}
+          disabled={
+            currentPage === Math.ceil(filteredData.length / rowsPerPage)
+          }
         >
           Next
         </Button>

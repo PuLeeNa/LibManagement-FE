@@ -28,9 +28,18 @@ export function MemberConsole() {
   const [rowsPerPage] = useState(5);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const filteredData = memberData.filter(
+    (member) =>
+      (member.memberId?.toLowerCase() || "").includes(
+        searchQuery.toLowerCase()
+      ) ||
+      (member.name?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
+      (member.email?.toLowerCase() || "").includes(searchQuery.toLowerCase())
+  );
+
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  const currentRows = memberData.slice(indexOfFirstRow, indexOfLastRow);
+  const currentRows = filteredData.slice(indexOfFirstRow, indexOfLastRow);
 
   const loadData = async () => {
     const memberDetails = await GetMembers();
@@ -85,13 +94,28 @@ export function MemberConsole() {
 
   return (
     <>
-      <div className="d-flex justify-content-end p-3">
-        <Button
-          variant="outline-primary"
-          onClick={() => setShowAddMemberForm(true)}
-        >
-          Add Member
-        </Button>
+      <div className="d-flex justify-content-between p-3 gap-2">
+        <h1 className="p-1 " style={{ color: "navy" }}>
+          Lending
+        </h1>
+        <div className="d-flex justify-content-end p-3 gap-2">
+          <input
+            type="text"
+            placeholder="Search lending..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1); // reset to first page on search
+            }}
+            className="form-control w-auto"
+          />
+          <Button
+            variant="outline-primary"
+            onClick={() => setShowAddMemberForm(true)}
+          >
+            Add Member
+          </Button>
+        </div>
       </div>
       <Table striped bordered hover style={{ borderColor: "navy" }}>
         <thead style={{ backgroundColor: "navy", color: "white" }}>
@@ -150,7 +174,7 @@ export function MemberConsole() {
         </Button>
 
         {Array.from(
-          { length: Math.ceil(memberData.length / rowsPerPage) },
+          { length: Math.ceil(filteredData.length / rowsPerPage) },
           (_, i) => (
             <Button
               key={i + 1}
@@ -166,10 +190,12 @@ export function MemberConsole() {
           variant="secondary"
           onClick={() =>
             setCurrentPage((prev) =>
-              Math.min(prev + 1, Math.ceil(memberData.length / rowsPerPage))
+              Math.min(prev + 1, Math.ceil(filteredData.length / rowsPerPage))
             )
           }
-          disabled={currentPage === Math.ceil(memberData.length / rowsPerPage)}
+          disabled={
+            currentPage === Math.ceil(filteredData.length / rowsPerPage)
+          }
         >
           Next
         </Button>
