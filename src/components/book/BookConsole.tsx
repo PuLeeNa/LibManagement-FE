@@ -107,10 +107,11 @@ export function BookConsole() {
 
   return (
     <>
-      <div className="d-flex justify-content-end p-3 gap-2">
-        <h3 className="p-1 " style={{ color: "navy" }}>
+      <div className="d-flex justify-content-between p-3 gap-2">
+        <h1 className="p-1 " style={{ color: "navy" }}>
         Books
-      </h3>
+      </h1>
+      <div className="d-flex justify-content-end p-3 gap-2">
         <input
           type="text"
           placeholder="Search books..."
@@ -127,6 +128,7 @@ export function BookConsole() {
         >
           Add Book
         </Button>
+        </div>
       </div>
       <Table striped bordered hover style={{ borderColor: "navy" }}>
         <thead style={{ backgroundColor: "navy", color: "white" }}>

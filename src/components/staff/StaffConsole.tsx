@@ -30,10 +30,20 @@ export function StaffConsole() {
   const [showAddStaffForm, setShowAddStaffForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage] = useState(5);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredData = staffData.filter((staff) =>
+    staff.staffId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    staff.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    staff.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    staff.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    staff.phone.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    staff.role.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  const currentRows = staffData.slice(indexOfFirstRow, indexOfLastRow);
+  const currentRows = filteredData.slice(indexOfFirstRow, indexOfLastRow);
 
   const loadData = async () => {
     const staffDetails = await GetStaffs();
@@ -91,13 +101,28 @@ export function StaffConsole() {
 
   return (
     <>
-      <div className="d-flex justify-content-end p-3">
+      <div className="d-flex justify-content-between p-3 gap-2">
+        <h1 className="p-1 " style={{ color: "navy" }}>
+        Staff
+      </h1>
+      <div className="d-flex justify-content-end p-3 gap-2">
+        <input
+          type="text"
+          placeholder="Search staff..."
+          value={searchQuery}
+          onChange={(e) => {
+            setSearchQuery(e.target.value);
+            setCurrentPage(1); // reset to first page on search
+          }}
+          className="form-control w-auto"
+        />
         <Button
           variant="outline-primary"
           onClick={() => setShowAddStaffForm(true)}
         >
           Add Staff
         </Button>
+        </div>
       </div>
       <Table striped bordered hover style={{ borderColor: "navy" }}>
         <thead style={{ backgroundColor: "navy", color: "white" }}>
@@ -157,7 +182,7 @@ export function StaffConsole() {
         </Button>
 
         {Array.from(
-          { length: Math.ceil(staffData.length / rowsPerPage) },
+          { length: Math.ceil(filteredData.length / rowsPerPage) },
           (_, i) => (
             <Button
               key={i + 1}
@@ -173,10 +198,10 @@ export function StaffConsole() {
           variant="secondary"
           onClick={() =>
             setCurrentPage((prev) =>
-              Math.min(prev + 1, Math.ceil(staffData.length / rowsPerPage))
+              Math.min(prev + 1, Math.ceil(filteredData.length / rowsPerPage))
             )
           }
-          disabled={currentPage === Math.ceil(staffData.length / rowsPerPage)}
+          disabled={currentPage === Math.ceil(filteredData.length / rowsPerPage)}
         >
           Next
         </Button>
