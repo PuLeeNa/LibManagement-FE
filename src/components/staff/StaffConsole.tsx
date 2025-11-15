@@ -99,9 +99,6 @@ export function StaffConsole() {
           Add Staff
         </Button>
       </div>
-      <h1 className="p-2 " style={{ color: "navy" }}>
-        Staff
-      </h1>
       <Table striped bordered hover style={{ borderColor: "navy" }}>
         <thead style={{ backgroundColor: "navy", color: "white" }}>
           <tr>
