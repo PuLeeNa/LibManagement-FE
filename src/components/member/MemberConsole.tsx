@@ -24,6 +24,13 @@ export function MemberConsole() {
   const [showEditMemberForm, setShowEditMemberForm] = useState(false);
   const [showAddMemberForm, setShowAddMemberForm] = useState(false);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage] = useState(5);
+
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentRows = memberData.slice(indexOfFirstRow, indexOfLastRow);
+
   const loadData = async () => {
     const memberDetails = await GetMembers();
     setMemberData(memberDetails);
@@ -97,7 +104,7 @@ export function MemberConsole() {
           </tr>
         </thead>
         <tbody>
-          {memberData.map((row) => (
+          {currentRows.map((row) => (
             <tr key={row.memberId}>
               {Object.values(row).map((cell, index) => (
                 <td key={index}>{cell}</td>
@@ -135,6 +142,40 @@ export function MemberConsole() {
         handleAdd={handleAdd}
         addMember={AddMemberData}
       />
+      <div className="d-flex justify-content-center gap-2 my-3">
+        <Button
+          variant="secondary"
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </Button>
+
+        {Array.from(
+          { length: Math.ceil(memberData.length / rowsPerPage) },
+          (_, i) => (
+            <Button
+              key={i + 1}
+              variant={currentPage === i + 1 ? "primary" : "outline-primary"}
+              onClick={() => setCurrentPage(i + 1)}
+            >
+              {i + 1}
+            </Button>
+          )
+        )}
+
+        <Button
+          variant="secondary"
+          onClick={() =>
+            setCurrentPage((prev) =>
+              Math.min(prev + 1, Math.ceil(memberData.length / rowsPerPage))
+            )
+          }
+          disabled={currentPage === Math.ceil(memberData.length / rowsPerPage)}
+        >
+          Next
+        </Button>
+      </div>
     </>
   );
 }
