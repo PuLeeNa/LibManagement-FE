@@ -75,12 +75,6 @@ export function MemberConsole() {
     }
   };
 
-  const location = useLocation();
-  const routeName =
-    location.pathname.split("/").filter(Boolean).pop() || "Home";
-  const formattedTitle =
-    routeName.charAt(0).toUpperCase() + routeName.slice(1, -1) + "r";
-
   return (
     <>
       <div className="d-flex justify-content-end p-3">
@@ -88,11 +82,11 @@ export function MemberConsole() {
           variant="outline-primary"
           onClick={() => setShowAddMemberForm(true)}
         >
-          Add {formattedTitle}
+          Add Member
         </Button>
       </div>
       <h1 className="p-2 " style={{ color: "navy" }}>
-        {formattedTitle}
+        Members
       </h1>
       <Table striped bordered hover style={{ borderColor: "navy" }}>
         <thead style={{ backgroundColor: "navy", color: "white" }}>

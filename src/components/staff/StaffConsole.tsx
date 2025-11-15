@@ -83,12 +83,6 @@ export function StaffConsole() {
     }
   };
 
-  const location = useLocation();
-  const routeName =
-    location.pathname.split("/").filter(Boolean).pop() || "Home";
-  const formattedTitle =
-    routeName.charAt(0).toUpperCase() + routeName.slice(1, -1) + "f";
-
   return (
     <>
       <div className="d-flex justify-content-end p-3">
@@ -96,11 +90,11 @@ export function StaffConsole() {
           variant="outline-primary"
           onClick={() => setShowAddStaffForm(true)}
         >
-          Add {formattedTitle}
+          Add Staff
         </Button>
       </div>
       <h1 className="p-2 " style={{ color: "navy" }}>
-        {formattedTitle}
+        Staff
       </h1>
       <Table striped bordered hover style={{ borderColor: "navy" }}>
         <thead style={{ backgroundColor: "navy", color: "white" }}>

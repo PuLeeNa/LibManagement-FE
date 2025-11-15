@@ -81,11 +81,11 @@ export function BookConsole() {
     }
   };
 
-  const location = useLocation();
-  const routeName =
-    location.pathname.split("/").filter(Boolean).pop() || "Home";
-  const formattedTitle =
-    routeName.charAt(0).toUpperCase() + routeName.slice(1, -1) + "k";
+  // const location = useLocation();
+  // const routeName =
+  //   location.pathname.split("/").filter(Boolean).pop() || "Home";
+  // const formattedTitle =
+  //   routeName.charAt(0).toUpperCase() + routeName.slice(1, -1) + "k";
 
   return (
     <>
@@ -94,11 +94,11 @@ export function BookConsole() {
           variant="outline-primary"
           onClick={() => setShowAddBookForm(true)}
         >
-          Add {formattedTitle}
+          Add Book
         </Button>
       </div>
       <h1 className="p-2 " style={{ color: "navy" }}>
-        {formattedTitle}
+        Books
       </h1>
       <Table striped bordered hover style={{ borderColor: "navy" }}>
         <thead style={{ backgroundColor: "navy", color: "white" }}>
