@@ -26,7 +26,7 @@ export function BookConsole() {
   const [showAddBookForm, setShowAddBookForm] = useState(false);
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage] = useState(4);
+  const [rowsPerPage] = useState(5);
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
