@@ -27,10 +27,20 @@ export function BookConsole() {
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage] = useState(5);
+  // Search
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredData = bookData.filter((book) =>
+  book.bookId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  book.bookName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  book.publisher.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  book.isbn.toLowerCase().includes(searchQuery.toLowerCase())
+);
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  const currentRows = bookData.slice(indexOfFirstRow, indexOfLastRow);
+  const currentRows = filteredData.slice(indexOfFirstRow, indexOfLastRow);
 
   const loadData = async () => {
     const bookDetails = await GetBooks();
@@ -87,6 +97,7 @@ export function BookConsole() {
       console.error("Error deleting book:", error);
     }
   };
+  
 
   // const location = useLocation();
   // const routeName =
@@ -96,7 +107,20 @@ export function BookConsole() {
 
   return (
     <>
-      <div className="d-flex justify-content-end p-3">
+      <div className="d-flex justify-content-end p-3 gap-2">
+        <h3 className="p-1 " style={{ color: "navy" }}>
+        Books
+      </h3>
+        <input
+          type="text"
+          placeholder="Search books..."
+          value={searchQuery}
+          onChange={(e) => {
+            setSearchQuery(e.target.value);
+            setCurrentPage(1); // reset to first page on search
+          }}
+          className="form-control w-auto"
+        />
         <Button
           variant="outline-primary"
           onClick={() => setShowAddBookForm(true)}
@@ -104,9 +128,6 @@ export function BookConsole() {
           Add Book
         </Button>
       </div>
-      {/* <h1 className="p-2 " style={{ color: "navy" }}>
-        Books
-      </h1> */}
       <Table striped bordered hover style={{ borderColor: "navy" }}>
         <thead style={{ backgroundColor: "navy", color: "white" }}>
           <tr>
@@ -164,7 +185,7 @@ export function BookConsole() {
         </Button>
 
         {Array.from(
-          { length: Math.ceil(bookData.length / rowsPerPage) },
+          { length: Math.ceil(filteredData.length / rowsPerPage) },
           (_, i) => (
             <Button
               key={i + 1}
@@ -180,10 +201,10 @@ export function BookConsole() {
           variant="secondary"
           onClick={() =>
             setCurrentPage((prev) =>
-              Math.min(prev + 1, Math.ceil(bookData.length / rowsPerPage))
+              Math.min(prev + 1, Math.ceil(filteredData.length / rowsPerPage))
             )
           }
-          disabled={currentPage === Math.ceil(bookData.length / rowsPerPage)}
+          disabled={currentPage === Math.ceil(filteredData.length / rowsPerPage)}
         >
           Next
         </Button>

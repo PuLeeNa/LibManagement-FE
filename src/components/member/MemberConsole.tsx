@@ -26,6 +26,7 @@ export function MemberConsole() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage] = useState(5);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
