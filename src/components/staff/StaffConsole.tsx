@@ -131,40 +131,50 @@ export function StaffConsole() {
           </Button>
         </div>
       </div>
-      <Table striped bordered hover style={{ borderColor: "navy" }}>
-        <thead style={{ backgroundColor: "navy", color: "white" }}>
-          <tr>
-            {tHeads.map((headings) => (
-              <th>{headings}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {currentRows.map((row) => (
-            <tr key={row.staffId}>
-              {Object.values(row).map((cell, index) => (
-                <td key={index}>{cell}</td>
+      <div className="table-responsive">
+        <Table striped bordered hover style={{ borderColor: "navy" }}>
+          <thead style={{ backgroundColor: "navy", color: "white" }}>
+            <tr>
+              {tHeads.map((headings, idx) => (
+                <th key={idx}>{headings}</th>
               ))}
-              <td>
-                <div className="d-flex gap-2">
-                  <Button
-                    variant="outline-success"
-                    onClick={() => handleEdit(row)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="outline-danger"
-                    onClick={() => handleDelete(row.staffId)}
-                  >
-                    Delete
-                  </Button>
-                </div>
-              </td>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {currentRows.map((row) => (
+              <tr key={row.staffId}>
+                <td>{row.staffId}</td>
+                <td>{row.firstName}</td>
+                <td>{row.lastName}</td>
+                <td>{row.email}</td>
+                <td>{row.joinDate}</td>
+                <td>{row.lastUpdateDate}</td>
+                <td>{row.lastUpdateTime}</td>
+                <td>{row.phone}</td>
+                <td>{row.role}</td>
+                <td>
+                  <div className="d-flex gap-2">
+                    <Button
+                      variant="outline-success"
+                      size="sm"
+                      onClick={() => handleEdit(row)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outline-danger"
+                      size="sm"
+                      onClick={() => handleDelete(row.staffId)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
       <EditStaff
         show={showEditStaffForm}
         handleClose={handleClose}
