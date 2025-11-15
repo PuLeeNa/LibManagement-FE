@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import authService, { LoginCredentials } from '../service/authService/AuthService';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Form,
+  Button,
+  Alert,
+  Spinner,
+} from "react-bootstrap";
+import authService, {
+  LoginCredentials,
+} from "../service/authService/AuthService";
 
 const Login: React.FC = () => {
   const [credentials, setCredentials] = useState<LoginCredentials>({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   });
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -20,50 +32,142 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
       await authService.login(credentials);
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (err: any) {
-      setError(err.response?.data || 'Login failed. Please try again.');
+      setError(err.response?.data || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="login-container">
-      <h2>Library Management System</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={credentials.username}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={credentials.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        {error && <div className="error">{error}</div>}
-        <button type="submit" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
-      </form>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px",
+      }}
+    >
+      <Container>
+        <Row className="justify-content-center">
+          <Col md={6} lg={5} xl={4}>
+            <Card
+              className="shadow-lg"
+              style={{
+                borderRadius: "20px",
+                border: "none",
+              }}
+            >
+              <Card.Body className="p-5">
+                <div className="text-center mb-4">
+                  <div
+                    style={{
+                      fontSize: "3rem",
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    📚
+                  </div>
+                  <h2
+                    style={{
+                      color: "navy",
+                      fontWeight: "bold",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    LibraFlow
+                  </h2>
+                  <p className="text-muted">Library Management System</p>
+                </div>
+
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group className="mb-3">
+                    <Form.Label style={{ fontWeight: "500" }}>
+                      Username
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="username"
+                      placeholder="Enter username"
+                      value={credentials.username}
+                      onChange={handleChange}
+                      required
+                      style={{
+                        padding: "12px",
+                        borderRadius: "10px",
+                        border: "2px solid #e0e0e0",
+                      }}
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-4">
+                    <Form.Label style={{ fontWeight: "500" }}>
+                      Password
+                    </Form.Label>
+                    <Form.Control
+                      type="password"
+                      name="password"
+                      placeholder="Enter password"
+                      value={credentials.password}
+                      onChange={handleChange}
+                      required
+                      style={{
+                        padding: "12px",
+                        borderRadius: "10px",
+                        border: "2px solid #e0e0e0",
+                      }}
+                    />
+                  </Form.Group>
+
+                  {error && (
+                    <Alert variant="danger" className="mb-3">
+                      {error}
+                    </Alert>
+                  )}
+
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    style={{
+                      width: "100%",
+                      padding: "12px",
+                      borderRadius: "10px",
+                      backgroundColor: "navy",
+                      border: "none",
+                      fontWeight: "600",
+                      fontSize: "1rem",
+                    }}
+                  >
+                    {loading ? (
+                      <>
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                          className="me-2"
+                        />
+                        Logging in...
+                      </>
+                    ) : (
+                      "Login"
+                    )}
+                  </Button>
+                </Form>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 };
