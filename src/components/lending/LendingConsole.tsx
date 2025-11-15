@@ -27,6 +27,12 @@ export function LendingConsole() {
   const [selectedRow, setSelectedRow] = useState<Lending | null>(null);
   const [showEditLendingForm, setShowEditLendingForm] = useState(false);
   const [showAddLendingForm, setShowAddLendingForm] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage] = useState(5);
+
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentRows = lendingData.slice(indexOfFirstRow, indexOfLastRow);
 
   const loadData = async () => {
     const lendingDetails = await GetLendings();
@@ -105,7 +111,7 @@ export function LendingConsole() {
           </tr>
         </thead>
         <tbody>
-          {lendingData.map((row) => (
+          {currentRows.map((row) => (
             <tr key={row.lendingId}>
               {Object.values(row).map((cell, index) => (
                 <td key={index}>{cell}</td>
@@ -145,6 +151,41 @@ export function LendingConsole() {
         handleAdd={handleAdd}
         addLending={AddLendingData}
       />
+
+      <div className="d-flex justify-content-center gap-2 my-3">
+        <Button
+          variant="secondary"
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </Button>
+
+        {Array.from(
+          { length: Math.ceil(lendingData.length / rowsPerPage) },
+          (_, i) => (
+            <Button
+              key={i + 1}
+              variant={currentPage === i + 1 ? "primary" : "outline-primary"}
+              onClick={() => setCurrentPage(i + 1)}
+            >
+              {i + 1}
+            </Button>
+          )
+        )}
+
+        <Button
+          variant="secondary"
+          onClick={() =>
+            setCurrentPage((prev) =>
+              Math.min(prev + 1, Math.ceil(lendingData.length / rowsPerPage))
+            )
+          }
+          disabled={currentPage === Math.ceil(lendingData.length / rowsPerPage)}
+        >
+          Next
+        </Button>
+      </div>
     </>
   );
 }
