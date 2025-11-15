@@ -1,46 +1,184 @@
-# Getting Started with Create React App
+# 📚 LibraFlow - Library Management System (Frontend)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Link to Back-End - https://github.com/PuLeeNa/Library-Management-System
 
-## Available Scripts
+A modern, responsive React-based frontend application for managing library operations including books, members, staff, and book lendings with JWT authentication.
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+- **Authentication & Authorization**: Secure JWT-based login system with protected routes
+- **Dashboard**: Real-time statistics and recent lending information
+- **Book Management**: Add, edit, delete, and search books with pagination
+- **Member Management**: Manage library members with full CRUD operations
+- **Staff Management**: Handle staff records with comprehensive details
+- **Lending Management**: Track book lendings, returns, and fines
+- **Search & Filter**: Quick search functionality across all modules
+- **Pagination**: Efficient data display with paginated tables
+- **Responsive Design**: Modern UI with Bootstrap components
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 🛠️ Tech Stack
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **React** 18 with TypeScript
+- **React Router** for navigation
+- **React Bootstrap** for UI components
+- **Axios** for API calls with JWT interceptors
+- **Local Storage** for token management
 
-### `npm test`
+## 📋 Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js (v14 or higher)
+- npm or yarn
+- Backend API running on `http://localhost:8081`
 
-### `npm run build`
+## ⚙️ Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+git clone https://github.com/PuLeeNa/LibManagement-FE.git
+cd LibManagement-FE
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Install dependencies:
 
-### `npm run eject`
+```bash
+npm install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3. Configure API endpoint (if different from default):
+   - Update `baseURL` in `src/service/authService/AxiosConfig.ts`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🚀 Running the Application
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Development Mode
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+npm start
+```
 
-## Learn More
+Runs the app at [http://localhost:3000](http://localhost:3000)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Production Build
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm run build
+```
+
+Builds the app for production in the `build` folder.
+
+### Run Tests
+
+```bash
+npm test
+```
+
+## 📁 Project Structure
+
+```
+src/
+├── components/
+│   ├── book/          # Book management components
+│   ├── member/        # Member management components
+│   ├── staff/         # Staff management components
+│   ├── lending/       # Lending management components
+│   ├── Dashboard.tsx  # Main dashboard
+│   ├── Login.tsx      # Login page
+│   ├── NavB.tsx       # Navigation bar
+│   ├── NotFound.tsx   # 404 page
+│   └── ProtectedRoute.tsx  # Route protection
+├── service/
+│   ├── authService/   # Authentication services
+│   ├── BookData.ts    # Book API calls
+│   ├── MemberData.ts  # Member API calls
+│   ├── StaffData.ts   # Staff API calls
+│   └── LendingData.ts # Lending API calls
+├── App.tsx           # Main app component
+└── index.tsx         # Entry point
+```
+
+## 🔐 Authentication
+
+The application uses JWT tokens for authentication:
+
+- Login at `/login`
+- Token stored in localStorage
+- Automatic token attachment to API requests
+- Auto-redirect to login on 401 errors
+- Protected routes require valid authentication
+
+## 🌐 API Endpoints
+
+All endpoints require authentication (except `/auth/login`):
+
+- **Auth**: `/api/auth/login`, `/api/auth/validate`
+- **Books**: `/api/v1/books/*`
+- **Members**: `/api/v1/members/*`
+- **Staff**: `/api/v1/staffs/*`
+- **Lendings**: `/api/v1/lendings/*`
+
+## 🎨 Features by Module
+
+### Dashboard
+
+- Total counts for books, members, staff, and active lendings
+- Available books count
+- Recent lendings table with status badges
+
+### Book Management
+
+- Add/Edit/Delete books
+- Search by ID, name, author, publisher, ISBN
+- Pagination (5 items per page)
+- Track total and available quantities
+
+### Member Management
+
+- Manage member records
+- Search functionality
+- Membership date tracking
+
+### Staff Management
+
+- Complete staff information management
+- Role-based organization
+- Last update tracking
+
+### Lending Management
+
+- Track book lendings and returns
+- Calculate fines for overdue books
+- Status-based actions (only show "Book Returned" button for active lendings)
+- Overdue status monitoring
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create `.env` file for custom configuration:
+
+```
+REACT_APP_API_URL=http://localhost:8081/booklib/api
+```
+
+## 📦 Dependencies
+
+Key dependencies:
+
+- `react`: ^18.x
+- `react-router-dom`: ^6.x
+- `react-bootstrap`: ^2.x
+- `bootstrap`: ^5.x
+- `axios`: ^1.x
+- `typescript`: ^4.x
+
+## 👥 Author
+
+**PuLeeNa**
+
+- GitHub: [@PuLeeNa](https://github.com/PuLeeNa)
+
+## 🙏 Acknowledgments
+
+- React Bootstrap for UI components
+- Create React App for project bootstrapping
+- Spring Boot backend integration
