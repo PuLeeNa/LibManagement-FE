@@ -2,7 +2,7 @@ import axios from 'axios';
 import authService from './AuthService';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8081/booklib/api',
+  baseURL: `${process.env.REACT_APP_API_URL}/booklib/api` || 'http://localhost:8081/booklib/api',
 });
 
 // Request interceptor to add JWT token

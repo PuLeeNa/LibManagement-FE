@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8081/booklib/api/auth';
+const API_URL = `${process.env.REACT_APP_API_URL}/booklib/api/auth` || 'http://localhost:8081/booklib/api/auth';
 
 export interface LoginCredentials {
   username: string;
