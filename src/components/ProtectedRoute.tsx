@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import authService from '../service/authService/AuthService';
+import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
+import authService from "../service/authService/AuthService";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -41,7 +41,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
           <h4 className="mt-3" style={{ color: "navy", fontWeight: "600" }}>
             Loading...
           </h4>
-          <p className="text-muted">Please wait while we verify your credentials</p>
+          <p className="text-muted">
+            Please wait while we verify your credentials
+          </p>
         </div>
       </div>
     );
