@@ -6,10 +6,11 @@ import {
   UpdateLending,
   DeleteLending,
 } from "../../service/LendingData";
+import { GetBooks } from "../../service/BookData";
+import { GetMembers } from "../../service/MemberData";
 import { Button } from "react-bootstrap";
 import EditLendings from "./EditLendings";
 import AddLendings from "./AddLendings";
-import { useLocation } from "react-router";
 
 export function LendingConsole() {
   interface Lending {
@@ -23,7 +24,19 @@ export function LendingConsole() {
     fineAmount: number;
   }
 
+  interface Book {
+    bookId: string;
+    bookName: string;
+  }
+
+  interface Member {
+    memberId: string;
+    name: string;
+  }
+
   const [lendingData, setLendingData] = useState<Lending[]>([]);
+  const [books, setBooks] = useState<Book[]>([]);
+  const [members, setMembers] = useState<Member[]>([]);
   const [selectedRow, setSelectedRow] = useState<Lending | null>(null);
   const [showEditLendingForm, setShowEditLendingForm] = useState(false);
   const [showAddLendingForm, setShowAddLendingForm] = useState(false);
@@ -46,7 +59,24 @@ export function LendingConsole() {
 
   const loadData = async () => {
     const lendingDetails = await GetLendings();
+    const booksData = await GetBooks();
+    const membersData = await GetMembers();
     setLendingData(lendingDetails);
+    setBooks(booksData);
+    setMembers(membersData);
+  };
+
+  const getBookName = (bookId: string) => {
+    if (books.length === 0) {
+      return bookId;
+    }
+    const book = books.find((b) => b.bookId === bookId);
+    return book ? book.bookName : bookId;
+  };
+
+  const getMemberName = (memberId: string) => {
+    const member = members.find((m) => m.memberId === memberId);
+    return member ? member.name : memberId;
   };
 
   const handleAdd = async (newLending: Lending) => {
@@ -219,7 +249,7 @@ export function LendingConsole() {
                         className="mb-0"
                         style={{ color: "navy", fontWeight: "600" }}
                       >
-                        {row.book}
+                        {row.lendingId}
                       </h5>
                       <span
                         className={`badge ${
@@ -236,12 +266,12 @@ export function LendingConsole() {
                     </div>
                     <div className="row">
                       <div className="col-md-2">
-                        <small className="text-muted d-block">Lending ID</small>
-                        <span>{row.lendingId}</span>
+                        <small className="text-muted d-block">Book</small>
+                        <b><span>{getBookName(row.book)}</span></b>
                       </div>
                       <div className="col-md-3">
                         <small className="text-muted d-block">Member</small>
-                        <span>{row.member}</span>
+                        <b><span>{getMemberName(row.member)}</span></b>
                       </div>
                       <div className="col-md-2">
                         <small className="text-muted d-block">
