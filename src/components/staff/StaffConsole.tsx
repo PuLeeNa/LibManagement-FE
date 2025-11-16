@@ -108,52 +108,127 @@ export function StaffConsole() {
 
   return (
     <>
-      <div className="d-flex justify-content-between p-3 gap-2">
-        <h1 className="p-1 " style={{ color: "navy" }}>
-          Staff
-        </h1>
-        <div className="d-flex justify-content-end p-3 gap-2">
-          <input
-            type="text"
-            placeholder="Search staff..."
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              setCurrentPage(1); // reset to first page on search
-            }}
-            className="form-control w-auto"
-          />
-          <Button
-            variant="outline-primary"
-            onClick={() => setShowAddStaffForm(true)}
-          >
-            Add Staff
-          </Button>
+      <div className="p-4">
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h1 style={{ color: "navy", fontWeight: "bold" }}>
+            Staff Management
+          </h1>
+          <div className="d-flex gap-2">
+            <input
+              type="text"
+              placeholder="Search staff..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="form-control"
+              style={{ width: "250px" }}
+            />
+            <Button
+              variant="primary"
+              onClick={() => setShowAddStaffForm(true)}
+              style={{ backgroundColor: "navy", border: "none" }}
+            >
+              + Add Staff
+            </Button>
+          </div>
         </div>
-      </div>
-      <div className="table-responsive">
-        <Table striped bordered hover style={{ borderColor: "navy" }}>
-          <thead style={{ backgroundColor: "navy", color: "white" }}>
-            <tr>
-              {tHeads.map((headings, idx) => (
-                <th key={idx}>{headings}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {currentRows.map((row) => (
-              <tr key={row.staffId}>
-                <td>{row.staffId}</td>
-                <td>{row.firstName}</td>
-                <td>{row.lastName}</td>
-                <td>{row.email}</td>
-                <td>{row.joinDate}</td>
-                <td>{row.lastUpdateDate}</td>
-                <td>{row.lastUpdateTime}</td>
-                <td>{row.phone}</td>
-                <td>{row.role}</td>
-                <td>
-                  <div className="d-flex gap-2">
+
+        {/* Statistics Cards */}
+        <div className="row g-3 mb-4">
+          <div className="col-md-4">
+            <div
+              className="card shadow-sm"
+              style={{ borderRadius: "15px", borderLeft: "4px solid #0d6efd" }}
+            >
+              <div className="card-body">
+                <h6 className="text-muted">Total Staff</h6>
+                <h2 className="mb-0">{staffData.length}</h2>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div
+              className="card shadow-sm"
+              style={{ borderRadius: "15px", borderLeft: "4px solid #198754" }}
+            >
+              <div className="card-body">
+                <h6 className="text-muted">Active Staff</h6>
+                <h2 className="mb-0 text-success">{filteredData.length}</h2>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div
+              className="card shadow-sm"
+              style={{ borderRadius: "15px", borderLeft: "4px solid navy" }}
+            >
+              <div className="card-body">
+                <h6 className="text-muted">Departments</h6>
+                <h2 className="mb-0" style={{ color: "navy" }}>
+                  {new Set(staffData.map((s) => s.role)).size}
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Staff List */}
+        <div
+          className="card shadow-sm"
+          style={{ borderRadius: "15px", border: "none" }}
+        >
+          <div className="card-body p-0">
+            {currentRows.map((row, index) => (
+              <div
+                key={row.staffId}
+                className="p-3"
+                style={{
+                  borderBottom:
+                    index !== currentRows.length - 1
+                      ? "1px solid #e9ecef"
+                      : "none",
+                  transition: "background-color 0.2s",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#f8f9fa")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = "transparent")
+                }
+              >
+                <div className="d-flex justify-content-between align-items-start">
+                  <div className="flex-grow-1">
+                    <div className="d-flex align-items-center gap-2 mb-2">
+                      <h5
+                        className="mb-0"
+                        style={{ color: "navy", fontWeight: "600" }}
+                      >
+                        {row.firstName} {row.lastName}
+                      </h5>
+                      <span className="badge bg-primary">{row.role}</span>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-3">
+                        <small className="text-muted d-block">Staff ID</small>
+                        <span>{row.staffId}</span>
+                      </div>
+                      <div className="col-md-3">
+                        <small className="text-muted d-block">Email</small>
+                        <span>{row.email}</span>
+                      </div>
+                      <div className="col-md-3">
+                        <small className="text-muted d-block">Phone</small>
+                        <span>{row.phone}</span>
+                      </div>
+                      <div className="col-md-3">
+                        <small className="text-muted d-block">Join Date</small>
+                        <span>{row.joinDate}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="d-flex gap-2 ms-3">
                     <Button
                       variant="outline-success"
                       size="sm"
@@ -169,61 +244,61 @@ export function StaffConsole() {
                       Delete
                     </Button>
                   </div>
-                </td>
-              </tr>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </Table>
-      </div>
-      <EditStaff
-        show={showEditStaffForm}
-        handleClose={handleClose}
-        selectedRow={selectedRow}
-        handleUpdate={handleUpdate}
-        updateStaffs={UpdateStaff}
-      />
-      <AddStaff
-        show={showAddStaffForm}
-        handleClose={() => setShowAddStaffForm(false)}
-        handleAdd={handleAdd}
-        addStaff={AddStaffData}
-      />
+          </div>
+        </div>
+        <EditStaff
+          show={showEditStaffForm}
+          handleClose={handleClose}
+          selectedRow={selectedRow}
+          handleUpdate={handleUpdate}
+          updateStaffs={UpdateStaff}
+        />
+        <AddStaff
+          show={showAddStaffForm}
+          handleClose={() => setShowAddStaffForm(false)}
+          handleAdd={handleAdd}
+          addStaff={AddStaffData}
+        />
 
-      <div className="d-flex justify-content-center gap-2 my-3">
-        <Button
-          variant="secondary"
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </Button>
+        <div className="d-flex justify-content-center gap-2 my-3">
+          <Button
+            variant="secondary"
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </Button>
 
-        {Array.from(
-          { length: Math.ceil(filteredData.length / rowsPerPage) },
-          (_, i) => (
-            <Button
-              key={i + 1}
-              variant={currentPage === i + 1 ? "primary" : "outline-primary"}
-              onClick={() => setCurrentPage(i + 1)}
-            >
-              {i + 1}
-            </Button>
-          )
-        )}
-
-        <Button
-          variant="secondary"
-          onClick={() =>
-            setCurrentPage((prev) =>
-              Math.min(prev + 1, Math.ceil(filteredData.length / rowsPerPage))
+          {Array.from(
+            { length: Math.ceil(filteredData.length / rowsPerPage) },
+            (_, i) => (
+              <Button
+                key={i + 1}
+                variant={currentPage === i + 1 ? "primary" : "outline-primary"}
+                onClick={() => setCurrentPage(i + 1)}
+              >
+                {i + 1}
+              </Button>
             )
-          }
-          disabled={
-            currentPage === Math.ceil(filteredData.length / rowsPerPage)
-          }
-        >
-          Next
-        </Button>
+          )}
+
+          <Button
+            variant="secondary"
+            onClick={() =>
+              setCurrentPage((prev) =>
+                Math.min(prev + 1, Math.ceil(filteredData.length / rowsPerPage))
+              )
+            }
+            disabled={
+              currentPage === Math.ceil(filteredData.length / rowsPerPage)
+            }
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </>
   );
