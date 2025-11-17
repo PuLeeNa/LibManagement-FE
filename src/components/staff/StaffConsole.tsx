@@ -10,6 +10,7 @@ import { Button } from "react-bootstrap";
 import EditStaff from "./EditStaff";
 import AddStaff from "./AddStaff";
 import { useLocation } from "react-router";
+import { toast } from "react-toastify";
 
 export function StaffConsole() {
   interface Staff {
@@ -58,9 +59,14 @@ export function StaffConsole() {
   };
 
   const handleAdd = async (newStaff: Staff) => {
-    setStaffData([...staffData, newStaff]);
-    setShowAddStaffForm(false);
-    await loadData();
+    try {
+      setStaffData([...staffData, newStaff]);
+      setShowAddStaffForm(false);
+      await loadData();
+      toast.success("Staff added successfully!");
+    } catch (error) {
+      toast.error("Failed to add staff");
+    }
   };
 
   useEffect(() => {
@@ -90,19 +96,26 @@ export function StaffConsole() {
   };
 
   const handleUpdate = async (updatedStaff: Staff) => {
-    const updatedStaffs = staffData.map((staff) =>
-      staff.staffId === updatedStaff.staffId ? updatedStaff : staff
-    );
-    setStaffData(updatedStaffs);
-    await loadData();
+    try {
+      const updatedStaffs = staffData.map((staff) =>
+        staff.staffId === updatedStaff.staffId ? updatedStaff : staff
+      );
+      setStaffData(updatedStaffs);
+      await loadData();
+      toast.success("Staff updated successfully!");
+    } catch (error) {
+      toast.error("Failed to update staff");
+    }
   };
 
   const handleDelete = async (staffId: string) => {
     try {
       await DeleteStaff(staffId);
       setStaffData(staffData.filter((staff) => staff.staffId !== staffId));
+      toast.success("Staff deleted successfully!");
     } catch (error) {
       console.error("Error deleting staff:", error);
+      toast.error("Failed to delete staff");
     }
   };
 

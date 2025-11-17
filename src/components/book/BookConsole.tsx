@@ -6,6 +6,7 @@ import EditBook from "./EditBook";
 import { DeleteBook } from "../../service/BookData";
 import AddBook from "./AddBook";
 import { useLocation } from "react-router";
+import { toast } from "react-toastify";
 
 export function BookConsole() {
   interface Book {
@@ -53,9 +54,14 @@ export function BookConsole() {
   };
 
   const handleAdd = async (newBook: Book) => {
-    setBookData([...bookData, newBook]);
-    setShowAddBookForm(false);
-    await loadData();
+    try {
+      setBookData([...bookData, newBook]);
+      setShowAddBookForm(false);
+      await loadData();
+      toast.success("Book added successfully!");
+    } catch (error) {
+      toast.error("Failed to add book");
+    }
   };
 
   useEffect(() => {
@@ -87,19 +93,26 @@ export function BookConsole() {
   };
 
   const handleUpdate = async (updatedBook: Book) => {
-    const updatedBooks = bookData.map((book) =>
-      book.bookId === updatedBook.bookId ? updatedBook : book
-    );
-    setBookData(updatedBooks);
-    await loadData();
+    try {
+      const updatedBooks = bookData.map((book) =>
+        book.bookId === updatedBook.bookId ? updatedBook : book
+      );
+      setBookData(updatedBooks);
+      await loadData();
+      toast.success("Book updated successfully!");
+    } catch (error) {
+      toast.error("Failed to update book");
+    }
   };
 
   const handleDelete = async (bookId: string) => {
     try {
       await DeleteBook(bookId);
       setBookData(bookData.filter((book) => book.bookId !== bookId));
+      toast.success("Book deleted successfully!");
     } catch (error) {
       console.error("Error deleting book:", error);
+      toast.error("Failed to delete book");
     }
   };
 

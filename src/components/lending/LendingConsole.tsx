@@ -11,6 +11,7 @@ import { GetMembers } from "../../service/MemberData";
 import { Button } from "react-bootstrap";
 import EditLendings from "./EditLendings";
 import AddLendings from "./AddLendings";
+import { toast } from "react-toastify";
 
 export function LendingConsole() {
   interface Lending {
@@ -88,9 +89,14 @@ export function LendingConsole() {
   };
 
   const handleAdd = async (newLending: Lending) => {
-    setLendingData([...lendingData, newLending]);
-    setShowAddLendingForm(false);
-    await loadData();
+    try {
+      setLendingData([...lendingData, newLending]);
+      setShowAddLendingForm(false);
+      await loadData();
+      toast.success("Lending added successfully!");
+    } catch (error) {
+      toast.error("Failed to add lending");
+    }
   };
 
   useEffect(() => {
@@ -119,11 +125,18 @@ export function LendingConsole() {
   };
 
   const handleUpdate = async (updatedLending: Lending) => {
-    const updatedLendings = lendingData.map((lending) =>
-      lending.lendingId === updatedLending.lendingId ? updatedLending : lending
-    );
-    setLendingData(updatedLendings);
-    await loadData();
+    try {
+      const updatedLendings = lendingData.map((lending) =>
+        lending.lendingId === updatedLending.lendingId
+          ? updatedLending
+          : lending
+      );
+      setLendingData(updatedLendings);
+      await loadData();
+      toast.success("Lending updated successfully!");
+    } catch (error) {
+      toast.error("Failed to update lending");
+    }
   };
 
   const handleDelete = async (lendingId: string) => {
@@ -132,8 +145,10 @@ export function LendingConsole() {
       setLendingData(
         lendingData.filter((lending) => lending.lendingId !== lendingId)
       );
+      toast.success("Lending deleted successfully!");
     } catch (error) {
       console.error("Error deleting lending:", error);
+      toast.error("Failed to delete lending");
     }
   };
 

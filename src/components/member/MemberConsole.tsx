@@ -10,6 +10,7 @@ import { Button } from "react-bootstrap";
 import EditMember from "./EditMember";
 import AddMember from "./AddMember";
 import { useLocation } from "react-router";
+import { toast } from "react-toastify";
 
 export function MemberConsole() {
   interface Member {
@@ -47,9 +48,14 @@ export function MemberConsole() {
   };
 
   const handleAdd = async (newMember: Member) => {
-    setMemberData([...memberData, newMember]);
-    setShowAddMemberForm(false);
-    await loadData();
+    try {
+      setMemberData([...memberData, newMember]);
+      setShowAddMemberForm(false);
+      await loadData();
+      toast.success("Member added successfully!");
+    } catch (error) {
+      toast.error("Failed to add member");
+    }
   };
 
   useEffect(() => {
@@ -74,11 +80,16 @@ export function MemberConsole() {
   };
 
   const handleUpdate = async (updatedMember: Member) => {
-    const updatedMembers = memberData.map((member) =>
-      member.memberId === updatedMember.memberId ? updatedMember : member
-    );
-    setMemberData(updatedMembers);
-    await loadData();
+    try {
+      const updatedMembers = memberData.map((member) =>
+        member.memberId === updatedMember.memberId ? updatedMember : member
+      );
+      setMemberData(updatedMembers);
+      await loadData();
+      toast.success("Member updated successfully!");
+    } catch (error) {
+      toast.error("Failed to update member");
+    }
   };
 
   const handleDelete = async (memberId: string) => {
@@ -87,8 +98,10 @@ export function MemberConsole() {
       setMemberData(
         memberData.filter((member) => member.memberId !== memberId)
       );
+      toast.success("Member deleted successfully!");
     } catch (error) {
       console.error("Error deleting member:", error);
+      toast.error("Failed to delete member");
     }
   };
 

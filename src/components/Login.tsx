@@ -13,6 +13,7 @@ import {
 import authService, {
   LoginCredentials,
 } from "../service/authService/AuthService";
+import { toast } from "react-toastify";
 
 const Login: React.FC = () => {
   const [credentials, setCredentials] = useState<LoginCredentials>({
@@ -37,9 +38,13 @@ const Login: React.FC = () => {
 
     try {
       await authService.login(credentials);
+      toast.success("Login successful! Welcome back.");
       navigate("/dashboard");
     } catch (err: any) {
-      setError(err.response?.data || "Login failed. Please try again.");
+      const errorMessage =
+        err.response?.data || "Login failed. Please try again.";
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

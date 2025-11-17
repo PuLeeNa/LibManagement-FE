@@ -1,6 +1,8 @@
 import React from "react";
 // @ts-ignore: allow side-effect import of CSS without type declarations
 import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 import NavB from "./components/NavB";
 import { BookConsole } from "./components/book/BookConsole";
 import { MemberConsole } from "./components/member/MemberConsole";
@@ -16,6 +18,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <ToastContainer position="top-right" autoClose={3000} />
         <NavB />
         <Routes>
           <Route path="/login" element={<Login />} />
