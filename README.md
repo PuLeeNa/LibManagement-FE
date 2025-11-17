@@ -7,21 +7,29 @@ A modern, responsive React-based frontend application for managing library opera
 ## 🚀 Features
 
 - **Authentication & Authorization**: Secure JWT-based login system with protected routes
-- **Dashboard**: Real-time statistics and recent lending information
-- **Book Management**: Add, edit, delete, and search books with pagination
+- **Modern Dashboard UI**: Dashboard-style design with statistics cards and list views for all modules
+- **Toast Notifications**: Real-time user feedback for all CRUD operations using react-toastify
+- **Book Management**: Add, edit, delete, and search books with modern card-based UI
 - **Member Management**: Manage library members with full CRUD operations
 - **Staff Management**: Handle staff records with comprehensive details
-- **Lending Management**: Track book lendings, returns, and fines
-- **Search & Filter**: Quick search functionality across all modules
-- **Pagination**: Efficient data display with paginated tables
-- **Responsive Design**: Modern UI with Bootstrap components
+- **Lending Management**:
+  - Track book lendings, returns, and fines
+  - Filter by status (All, Active, Returned)
+  - Display book names and member names (not just IDs)
+  - Dropdown selects for easy book and member selection when adding lendings
+- **Search & Filter**: Quick search functionality across all modules with status filtering
+- **Pagination**: Efficient data display with paginated lists (5 items per page)
+- **Responsive Design**: Modern UI with Bootstrap components, hover effects, and rounded corners
+- **Loading Indicators**: Smooth loading experience with modern spinners
 
 ## 🛠️ Tech Stack
 
 - **React** 18 with TypeScript
-- **React Router** for navigation
-- **React Bootstrap** for UI components
+- **React Router** 7 for navigation
+- **React Bootstrap** 2 for UI components
+- **Bootstrap** 5 for styling
 - **Axios** for API calls with JWT interceptors
+- **React Toastify** for toast notifications
 - **Local Storage** for token management
 
 ## 📋 Prerequisites
@@ -45,8 +53,10 @@ cd LibManagement-FE
 npm install
 ```
 
-3. Configure API endpoint (if different from default):
-   - Update `baseURL` in `src/service/authService/AxiosConfig.ts`
+3. Configure environment variables:
+   - Create a `.env` file in the root directory
+   - Add: `REACT_APP_API_URL=http://localhost:8081/booklib/api`
+   - **Important**: In React, environment variables must be prefixed with `REACT_APP_`
 
 ## 🚀 Running the Application
 
@@ -120,35 +130,64 @@ All endpoints require authentication (except `/auth/login`):
 
 ### Dashboard
 
+- Modern card-based statistics layout
 - Total counts for books, members, staff, and active lendings
 - Available books count
 - Recent lendings table with status badges
+- Smooth loading indicators
 
 ### Book Management
 
-- Add/Edit/Delete books
+- Dashboard-style UI with statistics cards:
+  - Total Books
+  - Available Books
+  - Total Quantity
+- Modern list view with hover effects
+- Add/Edit/Delete books with toast notifications
 - Search by ID, name, author, publisher, ISBN
 - Pagination (5 items per page)
 - Track total and available quantities
+- Price tracking and display
 
 ### Member Management
 
-- Manage member records
+- Dashboard-style UI with statistics cards:
+  - Total Members
+  - Active Members
+  - New This Month
+- Modern list view layout
+- Full CRUD operations with toast notifications
 - Search functionality
 - Membership date tracking
 
 ### Staff Management
 
+- Dashboard-style UI with statistics cards:
+  - Total Staff
+  - Active Staff
+  - Departments Count
+- Modern list view with role badges
 - Complete staff information management
+- Toast notifications for all operations
 - Role-based organization
 - Last update tracking
 
 ### Lending Management
 
+- Dashboard-style UI with statistics cards:
+  - Total Lendings
+  - Active Lendings
+  - Overdue Count
+  - Total Fines
+- **Status Filter Dropdown**: Filter by All/Active/Returned
+- **Smart Book & Member Display**: Shows names instead of just IDs
+- **Dropdown Selects for Adding**: Choose books and members from dropdown lists showing names with IDs
+- Modern list view with status badges (Active/Returned/Overdue)
 - Track book lendings and returns
-- Calculate fines for overdue books
-- Status-based actions (only show "Book Returned" button for active lendings)
-- Overdue status monitoring
+- Calculate and display fines for overdue books
+- Status-based actions (Book Returned button only for active lendings)
+- Toast notifications for all operations
+- Search by lending ID, book, or member
 
 ## 🔧 Configuration
 
@@ -164,12 +203,21 @@ REACT_APP_API_URL=http://localhost:8081/booklib/api
 
 Key dependencies:
 
-- `react`: ^18.x
-- `react-router-dom`: ^6.x
-- `react-bootstrap`: ^2.x
-- `bootstrap`: ^5.x
-- `axios`: ^1.x
-- `typescript`: ^4.x
+- `react`: ^19.2.0
+- `react-dom`: ^19.2.0
+- `react-router`: ^7.9.5
+- `react-router-dom`: ^7.9.6
+- `react-bootstrap`: ^2.10.10
+- `bootstrap`: ^5.3.8
+- `react-toastify`: ^10.x (for toast notifications)
+- `axios`: ^1.12.2
+- `typescript`: ^4.9.5
+
+Dev dependencies:
+
+- `@testing-library/react`: ^16.3.0
+- `@testing-library/jest-dom`: ^6.9.1
+- `react-scripts`: 5.0.1
 
 ## 👥 Author
 
@@ -177,8 +225,40 @@ Key dependencies:
 
 - GitHub: [@PuLeeNa](https://github.com/PuLeeNa)
 
+## 🎨 UI/UX Highlights
+
+- **Modern Dashboard Design**: Statistics cards with color-coded left borders (blue, green, yellow, red, navy)
+- **Card-Based Layouts**: Clean, modern list views with hover effects replacing traditional tables
+- **Rounded Corners**: 15px border radius for a softer, modern look
+- **Shadow Effects**: Subtle shadows on cards for depth
+- **Responsive Grid Layout**: Information organized in responsive columns
+- **Color Coding**:
+  - Navy theme throughout the application
+  - Success green for positive actions
+  - Danger red for delete operations
+  - Warning yellow for important metrics
+- **Toast Notifications**:
+  - Success toasts (green) for completed operations
+  - Error toasts (red) for failures
+  - Auto-dismiss after 3 seconds
+  - Top-right position
+- **Loading States**: Modern navy-themed spinner with descriptive text
+
+## 🔄 Recent Updates
+
+- ✅ Migrated to dashboard-style UI for all console pages
+- ✅ Added react-toastify for user feedback on all CRUD operations
+- ✅ Implemented status filtering for lendings (All/Active/Returned)
+- ✅ Enhanced lending forms with book and member name dropdowns
+- ✅ Replaced table structures with modern list views
+- ✅ Added statistics cards to all management pages
+- ✅ Implemented proper environment variable handling with REACT*APP* prefix
+- ✅ Added modern loading indicators for authentication
+
 ## 🙏 Acknowledgments
 
 - React Bootstrap for UI components
+- React Toastify for notification system
 - Create React App for project bootstrapping
 - Spring Boot backend integration
+- TypeScript for type safety
