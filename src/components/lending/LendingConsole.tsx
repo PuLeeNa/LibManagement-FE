@@ -43,15 +43,23 @@ export function LendingConsole() {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage] = useState(5);
   const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
 
-  const filteredData = lendingData.filter(
-    (lending) =>
+  const filteredData = lendingData.filter((lending) => {
+    const matchesSearch =
       (lending.lendingId?.toLowerCase() || "").includes(
         searchQuery.toLowerCase()
       ) ||
       (lending.book?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
-      (lending.member?.toLowerCase() || "").includes(searchQuery.toLowerCase())
-  );
+      (lending.member?.toLowerCase() || "").includes(searchQuery.toLowerCase());
+
+    const matchesStatus =
+      statusFilter === "all" ||
+      (statusFilter === "active" && lending.isActiveLending === "true") ||
+      (statusFilter === "returned" && lending.isActiveLending === "false");
+
+    return matchesSearch && matchesStatus;
+  });
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -137,6 +145,19 @@ export function LendingConsole() {
             Lending Management
           </h1>
           <div className="d-flex gap-2">
+            <select
+              className="form-select"
+              style={{ width: "150px" }}
+              value={statusFilter}
+              onChange={(e) => {
+                setStatusFilter(e.target.value);
+                setCurrentPage(1);
+              }}
+            >
+              <option value="all">All Status</option>
+              <option value="active">Active</option>
+              <option value="returned">Returned</option>
+            </select>
             <input
               type="text"
               placeholder="Search lending..."
@@ -267,11 +288,15 @@ export function LendingConsole() {
                     <div className="row">
                       <div className="col-md-2">
                         <small className="text-muted d-block">Book</small>
-                        <b><span>{getBookName(row.book)}</span></b>
+                        <b>
+                          <span>{getBookName(row.book)}</span>
+                        </b>
                       </div>
                       <div className="col-md-3">
                         <small className="text-muted d-block">Member</small>
-                        <b><span>{getMemberName(row.member)}</span></b>
+                        <b>
+                          <span>{getMemberName(row.member)}</span>
+                        </b>
                       </div>
                       <div className="col-md-2">
                         <small className="text-muted d-block">
