@@ -27,11 +27,11 @@ function NavB() {
               gap: "10px",
             }}
           >
-            <img
+            {/* <img
               src="https://cdn-icons-png.flaticon.com/512/2702/2702134.png"
               alt="Library Logo"
               style={{ width: "40px", height: "40px" }}
-            />
+            /> */}
             LibraFlow
           </Navbar.Brand>
           <Nav className="me-auto">
