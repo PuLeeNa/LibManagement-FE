@@ -1,5 +1,8 @@
 # 📚 LibraFlow - Library Management System (Frontend)
 
+## Live Demo
+Check out the live project [here](https://libraflowmgmt.netlify.app/)
+
 Link to Back-End - https://github.com/PuLeeNa/Library-Management-System
 
 A modern, responsive React-based frontend application for managing library operations including books, members, staff, and book lendings with JWT authentication.
