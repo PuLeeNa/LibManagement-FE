@@ -6,10 +6,6 @@
 
 🔗 **[LibraFlow Live](https://libraflowmgmt.netlify.app/)** - Deployed on Netlify
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/your-site-id/deploy-status)](https://app.netlify.com/sites/libraflowmgmt/deploys)
-
-> **Note**: This frontend is deployed using **Netlify's continuous deployment**
-
 Link to Back-End - https://github.com/PuLeeNa/Library-Management-System
 
 A modern, responsive React-based frontend application for managing library operations including books, members, staff, and book lendings with JWT authentication.
