@@ -4,7 +4,7 @@
 
 **Experience the application live!** 🚀
 
-🔗 **[LibraFlow Live](https://libraflowmgmt.netlify.app/)** - Deployed on Netlify
+🔗 **[LibraFlow](https://libraflowmgmt.netlify.app/)** - Deployed on Netlify
 
 Link to Back-End - https://github.com/PuLeeNa/Library-Management-System
 
