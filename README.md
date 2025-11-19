@@ -1,7 +1,14 @@
 # 📚 LibraFlow - Library Management System (Frontend)
 
-## Live Demo
-Check out the live project [here](https://libraflowmgmt.netlify.app/)
+## 🌐 Live Demo
+
+**Experience the application live!** 🚀
+
+🔗 **[LibraFlow Live](https://libraflowmgmt.netlify.app/)** - Deployed on Netlify
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/your-site-id/deploy-status)](https://app.netlify.com/sites/libraflowmgmt/deploys)
+
+> **Note**: This frontend is deployed using **Netlify's continuous deployment**
 
 Link to Back-End - https://github.com/PuLeeNa/Library-Management-System
 
@@ -84,6 +91,69 @@ Builds the app for production in the `build` folder.
 ```bash
 npm test
 ```
+
+## 🚢 Deployment
+
+### Netlify Deployment (Production)
+
+This application is deployed and hosted on **Netlify** with continuous deployment enabled.
+
+#### Deployment Features:
+
+- ✅ **Build Optimization**: Optimized production builds with code splitting
+- ✅ **HTTPS**: Secure SSL certificate automatically provisioned
+- ✅ **CDN Distribution**: Global CDN for fast content delivery
+- ✅ **Environment Variables**: Configured in Netlify dashboard for secure API endpoints
+
+#### Manual Deployment Steps:
+
+1. **Build the production bundle:**
+
+   ```bash
+   npm run build
+   ```
+
+2. **Deploy to Netlify:**
+
+   - Option A: **Drag & Drop** - Upload the `build` folder to Netlify dashboard
+   - Option B: **Netlify CLI**
+     ```bash
+     npm install -g netlify-cli
+     netlify login
+     netlify deploy --prod
+     ```
+   - Option C: **GitHub Integration** (Recommended)
+     - Connect repository to Netlify
+     - Configure build settings:
+       - Build command: `npm run build`
+       - Publish directory: `build`
+     - Set environment variables in Netlify dashboard
+
+3. **Configure Environment Variables in Netlify:**
+   - Go to Site Settings → Build & Deploy → Environment
+   - Add: `REACT_APP_API_URL` with your production backend URL
+
+#### Deployment Configuration:
+
+Create `netlify.toml` in root directory:
+
+```toml
+[build]
+  command = "npm run build"
+  publish = "build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+```
+
+### Other Deployment Options:
+
+- **Vercel**: `npm install -g vercel && vercel`
+- **GitHub Pages**: Configure in `package.json` with `gh-pages`
+- **AWS S3 + CloudFront**: For enterprise-scale deployments
+- **Docker**: Containerized deployment with Nginx
 
 ## 📁 Project Structure
 
